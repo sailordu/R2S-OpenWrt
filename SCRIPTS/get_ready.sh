@@ -5,14 +5,6 @@ wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PAT
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
 patch -p1 < ./rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
 patch -p1 < ./rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
-#patch config-5.4 to support docker:
-echo '
-CONFIG_CGROUP_HUGETLB=y
-CONFIG_CGROUP_NET_PRIO=y
-CONFIG_EXT4_FS_SECURITY=y
-CONFIG_IPVLAN=y
-CONFIG_DM_THIN_PROVISIONING=y
-' >> ./target/linux/rockchip/armv8/config-5.4
 #patch config-5.4 to reduce waiting:
 echo '
 CONFIG_CRYPTO_AES_ARM64_CE_BLK=y
