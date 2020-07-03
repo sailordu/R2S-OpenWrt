@@ -60,12 +60,7 @@ jobs:
 
       - name: Prepare Mixedwrt
         run: |
-          git clone https://git.openwrt.org/openwrt/openwrt.git
-          cd openwrt
-          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
-          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
-          patch -p1 < ./rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
-          patch -p1 < ./rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
+          /bin/bash ./SCRIPTS/get_ready.sh
 
       - name: Prepare Package
         run: |
@@ -88,13 +83,13 @@ jobs:
       - name: Custom config
         run: |
           cd openwrt
-          cp -r ../SCRIPTS/r2s_custom_QiuSimons.sh ./r2s_custom.sh
+          cp -r ../SCRIPTS/r2s_custom.sh ./r2s_custom.sh
           /bin/bash r2s_custom.sh
 
       - name: Make Config
         run: |
           cd openwrt
-          mv ../SEED/config_QiuSimons.seed .config
+          mv ../SEED/config.seed .config
           make defconfig
           chmod -R 755 ./
 
@@ -112,7 +107,9 @@ jobs:
 
       - name: Cleaning
         run: |
-          /bin/bash ./SCRIPTS/clean.sh
+          cd openwrt/bin/targets/rockchip/armv8
+          wget https://github.com/project-openwrt/R2S-OpenWrt/raw/master/SCRIPTS/05_cleaning.sh
+          /bin/bash ./05_cleaning.sh
 
       - name: Assemble Artifact
         id: assemble_artifact
