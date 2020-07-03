@@ -11,7 +11,7 @@
 
 ## 说明
 * Fork自QiuSimons大神的纯原生OP版本,个人根据**完全私人**口味进行了一定修改,建议去源库了解更多
-    - [QiuSimons/R2S-OpenWrt](https://github.com/QiuSimons/R2S-OpenWrt)
+    - [QiuSimons/R2S-OpenWrt](https://github.com/project-openwrt/R2S-OpenWrt)
 * ipv4: 192.168.2.1
 * username: root
 * password: password
@@ -39,7 +39,7 @@
 * 原生OP内置升级,可选保留配置
 
 ## 特别感谢（排名不分先后）
-* [QiuSimons/R2S-OpenWrt](https://github.com/QiuSimons/R2S-OpenWrt)
+* [QiuSimons/R2S-OpenWrt](https://github.com/project-openwrt/R2S-OpenWrt)
 * [fanck0605/nanopi-r2s](https://github.com/fanck0605/nanopi-r2s)
 * [klever1988/nanopi-openwrt](https://github.com/klever1988/nanopi-openwrt)
 * [lsl330/R2S-SCRIPTS](https://github.com/lsl330/R2S-SCRIPTS)

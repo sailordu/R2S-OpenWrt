@@ -17,13 +17,14 @@ sed -i 's/O2/O3/g' ./rules.mk
 sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
+wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/include/scons.mk
 #patch jsonc
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
 #dnsmasq add aaaa-filter
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/dnsmasq-add-filter-aaaa-option.patch
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/luci-add-filter-aaaa-option.patch
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/900-add-filter-aaaa-option.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/dnsmasq-add-filter-aaaa-option.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-add-filter-aaaa-option.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/900-add-filter-aaaa-option.patch
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
 cp -f ./900-add-filter-aaaa-option.patch ./package/network/services/dnsmasq/patches/900-add-filter-aaaa-option.patch
@@ -37,6 +38,15 @@ popd
 # Patch Kernel 以解决fullcone冲突
 pushd target/linux/generic/hack-5.4
 wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+popd
+#Patch FireWall 以增添SFE
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-app-firewall_add_sfe_switch.patch
+patch -p1 < ./luci-app-firewall_add_sfe_switch.patch
+# SFE内核补丁
+pushd target/linux/generic/hack-5.4
+#wget https://raw.githubusercontent.com/MeIsReallyBa/Openwrt-sfe-flowoffload-linux-5.4/master/999-shortcut-fe-support.patch
+#wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
+wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/999-shortcut-fe-support.patch
 popd
 
 ##获取额外package
@@ -63,6 +73,8 @@ svn co https://github.com/openwrt/packages/branches/openwrt-18.06/net/ddns-scrip
 svn co https://github.com/openwrt/luci/branches/openwrt-18.06/applications/luci-app-ddns feeds/luci/applications/luci-app-ddns
 #定时重启
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autoreboot package/lean/luci-app-autoreboot
+#argon主题
+git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
 #SSRP
 svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/lean/luci-app-ssr-plus
 rm -rf ./package/lean/luci-app-ssr-plus/luasrc/view/shadowsocksr/ssrurl.htm
@@ -108,16 +120,19 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/le
 git clone -b master --single-branch https://github.com/QiuSimons/openwrt-fullconenat package/fullconenat
 #翻译及部分功能优化
 git clone -b master --single-branch https://github.com/QiuSimons/addition-trans-zh package/lean/lean-translate
+#SFE
+#svn co https://github.com/MeIsReallyBa/Openwrt-sfe-flowoffload-linux-5.4/trunk/shortcut-fe package/new/shortcut-fe
+#svn co https://github.com/project-openwrt/openwrt/branches/18.06-kernel5.4/package/lean/shortcut-fe package/new/shortcut-fe
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/new/shortcut-fe
+wget -qO package/base-files/files/etc/init.d/shortcut-fe https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/shortcut-fe
 
 ##最后的收尾工作
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 #修正架构
 sed -i "s,boardinfo.system,'ARMv8',g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
-#irq_optimize
-mkdir package/base-files/files/usr/bin
-wget -qO package/base-files/files/usr/bin/irq_optimize.sh https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/irq_optimize.sh
-wget -qO package/base-files/files/etc/init.d/irq_optimize https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/irq_optimize
+#adjust_network
+wget -qO package/base-files/files/etc/init.d/zzz_adjust_network https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/adjust_network
 #删除已有配置
 rm -rf .config
 #授予权限
