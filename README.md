@@ -15,7 +15,7 @@
 * ipv4: 192.168.2.1
 * username: root
 * password: password
-* 添加Flow Offload+Full Cone Nat+BBR
+* 添加Flow Offload/SFE(只能二选一,默认开启SFE)+Full Cone Nat+BBR
 * 1.5Ghz超频, 跑分2W+
 * 没有上传文件的app,没啥用去掉了 scp和sftp都支持
 * 无usb-wifi支持
