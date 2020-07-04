@@ -1,3 +1,6 @@
+## 20200703
+* 增加SFE选项,默认开启(与Flow Offload二选一)
+
 ## 20200627
 * 增加NateLol写的oled-app,完善oled长时间导致的内存问题
 
