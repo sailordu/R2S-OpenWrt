@@ -37,6 +37,7 @@
 
 ## 升级方法
 * 原生OP内置升级,可选保留配置
+* 刷写或升级后遇到任何问题，可以尝试ssh进路由器，输入fuck，回车后等待重启，或可解决(来自QiuSimons)
 
 ## 特别感谢（排名不分先后）
 * [QiuSimons/R2S-OpenWrt](https://github.com/project-openwrt/R2S-OpenWrt)

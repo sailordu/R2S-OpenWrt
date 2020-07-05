@@ -1,0 +1,10 @@
+#!/bin/sh
+# From QiuSimons
+
+cd /overlay
+rm -rf `ls | egrep -v '(upper|.fs_state)'`
+cd upper
+rm -rf `ls | egrep -v '(etc)'`
+cd etc
+rm -rf `ls | egrep -v '(config|samba|ssr|bench.log|passwd|shadow|sysupgrade.conf)'`
+sleep 5 && touch /etc/banner && reboot
