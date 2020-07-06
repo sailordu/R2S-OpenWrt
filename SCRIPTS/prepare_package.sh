@@ -103,7 +103,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree 
 #SSH防护
 svn co https://github.com/NateLol/natelol/trunk/luci-app-beardropper package/new/luci-app-beardropper
 #oled
-git clone -b master --single-branch https://github.com/NateLol/luci-app-oled package/new/luci-app-oled
+git clone -b patch-1 --single-branch https://github.com/msylgj/luci-app-oled package/new/luci-app-oled
 #frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
