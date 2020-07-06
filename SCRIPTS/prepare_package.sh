@@ -123,8 +123,9 @@ git clone -b master --single-branch https://github.com/QiuSimons/addition-trans-
 #SFE
 #svn co https://github.com/MeIsReallyBa/Openwrt-sfe-flowoffload-linux-5.4/trunk/shortcut-fe package/new/shortcut-fe
 #svn co https://github.com/project-openwrt/openwrt/branches/18.06-kernel5.4/package/lean/shortcut-fe package/new/shortcut-fe
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/new/shortcut-fe
-wget -qO package/base-files/files/etc/init.d/shortcut-fe https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/shortcut-fe
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
+#wget -qO package/base-files/files/etc/init.d/shortcut-fe https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/shortcut-fe
 
 ##最后的收尾工作
 #Lets Fuck
