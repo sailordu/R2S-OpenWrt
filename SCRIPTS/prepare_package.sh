@@ -28,6 +28,8 @@ wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PAT
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
 cp -f ./900-add-filter-aaaa-option.patch ./package/network/services/dnsmasq/patches/900-add-filter-aaaa-option.patch
+rm -rf ./package/network/services/dnsmasq/files/dhcp.conf
+wget -qO package/network/services/dnsmasq/files/dhcp.conf https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/dhcp.conf
 #Patch FireWall 以增添fullcone功能
 mkdir package/network/config/firewall/patches
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
@@ -37,7 +39,7 @@ wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch 
 popd
 # Patch Kernel 以解决fullcone冲突
 pushd target/linux/generic/hack-5.4
-wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
+wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
 popd
 #Patch FireWall 以增添SFE
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-app-firewall_add_sfe_switch.patch
@@ -56,13 +58,13 @@ svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/
 #arpbind
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
-svn co https://github.com/project-openwrt/openwrt/branches/openwrt-19.07/package/lean/autocore package/lean/autocore
+svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore package/lean/autocore
 sed -i "s,@TARGET_x86 ,,g" package/lean/autocore/Makefile
 rm -rf ./package/lean/autocore/files/cpuinfo
 wget -P package/lean/autocore/files https://raw.githubusercontent.com/QiuSimons/Others/master/cpuinfo
 rm -rf ./package/lean/autocore/files/rpcd_10_system.js
 wget -P package/lean/autocore/files https://raw.githubusercontent.com/QiuSimons/Others/master/rpcd_10_system.js
-svn co https://github.com/project-openwrt/openwrt/branches/openwrt-19.07/package/lean/coremark package/lean/coremark
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/lean/coremark
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
 #DDNS
 rm -rf ./feeds/packages/net/ddns-scripts
