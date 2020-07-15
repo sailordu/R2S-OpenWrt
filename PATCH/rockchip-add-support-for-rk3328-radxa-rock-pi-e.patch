@@ -24,7 +24,7 @@ Signed-off-by: Jayantajit Gogoi <jayanta.gogoi525@gmail.com>
  .../002-add-rk3328-usb3-driver.patch          | 1424 +++++++++++++++++
  .../003-add-rk3328-rock-pi-e-support.patch    |  420 +++++
  .../004-rk3328_add_idle_state.patch           |   71 +
- .../004-unlock-1512mhz-rk3328.patch           |   21 +
+ .../004-unlock-1512mhz-rk3328.patch           |   16 +
  .../patches-5.4/005-add_hwmon_support.patch   |   92 ++
  .../006-rk3328_add_mmc_reset.patch            |   40 +
  .../patches-5.4/007-add_mmc_poweroff.patch    |   94 ++
@@ -3108,22 +3108,17 @@ new file mode 100644
 index 0000000000..7d67233d62
 --- /dev/null
 +++ b/target/linux/rockchip/patches-5.4/004-unlock-1512mhz-rk3328.patch
-@@ -0,0 +1,21 @@
+@@ -0,0 +1,16 @@
 +diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
 +index 8dabc6e29..d58c893a6 100644
 +--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
 ++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+@@ -125,6 +125,16 @@
++@@ -125,6 +125,11 @@
 + 			opp-microvolt = <1300000>;
 + 			clock-latency-ns = <40000>;
 + 		};
 ++		opp-1512000000 {
 ++			opp-hz = /bits/ 64 <1512000000>;
-++			opp-microvolt = <1425000>;
-++			clock-latency-ns = <40000>;
-++		};
-++		opp-1608000000 {
-++			opp-hz = /bits/ 64 <1608000000>;
 ++			opp-microvolt = <1425000>;
 ++			clock-latency-ns = <40000>;
 ++		};
