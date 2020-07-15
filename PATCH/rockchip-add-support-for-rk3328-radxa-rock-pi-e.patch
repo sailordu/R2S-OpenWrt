@@ -3119,7 +3119,7 @@ index 0000000000..7d67233d62
 + 		};
 ++		opp-1512000000 {
 ++			opp-hz = /bits/ 64 <1512000000>;
-++			opp-microvolt = <1400000>;
+++			opp-microvolt = <1425000>;
 ++			clock-latency-ns = <40000>;
 ++		};
 + 	};
