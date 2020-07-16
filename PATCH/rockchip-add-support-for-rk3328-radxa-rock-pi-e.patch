@@ -24,7 +24,7 @@ Signed-off-by: Jayantajit Gogoi <jayanta.gogoi525@gmail.com>
  .../002-add-rk3328-usb3-driver.patch          | 1424 +++++++++++++++++
  .../003-add-rk3328-rock-pi-e-support.patch    |  420 +++++
  .../004-rk3328_add_idle_state.patch           |   71 +
- .../004-unlock-1512mhz-rk3328.patch           |   26 +
+ .../004-unlock-1512mhz-rk3328.patch           |   31 +
  .../patches-5.4/005-add_hwmon_support.patch   |   92 ++
  .../006-rk3328_add_mmc_reset.patch            |   40 +
  .../patches-5.4/007-add_mmc_poweroff.patch    |   94 ++
@@ -470,7 +470,7 @@ index 0000000000..621ac58c7c
 ++			vdd_logic: DCDC_REG1 {
 ++				regulator-name = "vdd_logic";
 ++				regulator-min-microvolt = <712500>;
-++				regulator-max-microvolt = <1525000>;
+++				regulator-max-microvolt = <1450000>;
 ++				regulator-ramp-delay = <12500>;
 ++				regulator-always-on;
 ++				regulator-boot-on;
@@ -483,7 +483,7 @@ index 0000000000..621ac58c7c
 ++			vdd_arm: DCDC_REG2 {
 ++				regulator-name = "vdd_arm";
 ++				regulator-min-microvolt = <712500>;
-++				regulator-max-microvolt = <1525000>;
+++				regulator-max-microvolt = <1515000>;
 ++				regulator-ramp-delay = <12500>;
 ++				regulator-always-on;
 ++				regulator-boot-on;
@@ -2819,7 +2819,7 @@ index 0000000000..d4e24be558
 ++			vdd_logic: DCDC_REG1 {
 ++				regulator-name = "vdd_logic";
 ++				regulator-min-microvolt = <712500>;
-++				regulator-max-microvolt = <1525000>;
+++				regulator-max-microvolt = <1450000>;
 ++				regulator-initial-mode = <0x1>;
 ++				regulator-ramp-delay = <12500>;
 ++				regulator-boot-on;
@@ -2834,7 +2834,7 @@ index 0000000000..d4e24be558
 ++			vdd_arm: DCDC_REG2 {
 ++				regulator-name = "vdd_arm";
 ++				regulator-min-microvolt = <712500>;
-++				regulator-max-microvolt = <1525000>;
+++				regulator-max-microvolt = <1515000>;
 ++				regulator-initial-mode = <0x1>;
 ++				regulator-ramp-delay = <12500>;
 ++				regulator-boot-on;
@@ -3108,28 +3108,33 @@ new file mode 100644
 index 0000000000..7d67233d62
 --- /dev/null
 +++ b/target/linux/rockchip/patches-5.4/004-unlock-1512mhz-rk3328.patch
-@@ -0,0 +1,26 @@
+@@ -0,0 +1,31 @@
 +diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
 +index 8dabc6e29..d58c893a6 100644
 +--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
 ++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+@@ -125,6 +125,21 @@
++@@ -125,6 +125,26 @@
 + 			opp-microvolt = <1300000>;
 + 			clock-latency-ns = <40000>;
 + 		};
 ++		opp-1512000000 {
 ++			opp-hz = /bits/ 64 <1512000000>;
-++			opp-microvolt = <1425000>;
+++			opp-microvolt = <1400000>;
 ++			clock-latency-ns = <40000>;
 ++		};
 ++		opp-1608000000 {
 ++			opp-hz = /bits/ 64 <1608000000>;
-++			opp-microvolt = <1450000>;
+++			opp-microvolt = <1435000>;
 ++			clock-latency-ns = <40000>;
 ++		};
 ++		opp-1704000000 {
 ++			opp-hz = /bits/ 64 <1704000000>;
 ++			opp-microvolt = <1475000>;
+++			clock-latency-ns = <40000>;
+++		};
+++		opp-1800000000 {
+++			opp-hz = /bits/ 64 <1800000000>;
+++			opp-microvolt = <1515000>;
 ++			clock-latency-ns = <40000>;
 ++		};
 + 	};
