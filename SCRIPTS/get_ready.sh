@@ -2,8 +2,9 @@
 git clone https://git.openwrt.org/openwrt/openwrt.git
 cd openwrt
 #wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
+#wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
 cp -rf ../../PATCH/rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch ./rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
+cp -rf ../../PATCH/rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch ./rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
 patch -p1 < ./rockchip-add-support-for-rk3328-radxa-rock-pi-e.patch
 patch -p1 < ./rockchip-add-support-for-FriendlyARM-NanoPi-R2S.patch
 #patch config-5.4 to reduce waiting:
