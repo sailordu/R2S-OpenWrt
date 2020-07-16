@@ -24,10 +24,9 @@ patch -p1 < ./use_json_object_new_int64.patch
 #dnsmasq add aaaa-filter
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/dnsmasq-add-filter-aaaa-option.patch
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-add-filter-aaaa-option.patch
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/900-add-filter-aaaa-option.patch
+wget -P package/network/services/dnsmasq/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/900-add-filter-aaaa-option.patch
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
-cp -f ./900-add-filter-aaaa-option.patch ./package/network/services/dnsmasq/patches/900-add-filter-aaaa-option.patch
 #Patch FireWall 以增添fullcone功能
 mkdir package/network/config/firewall/patches
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
@@ -48,6 +47,8 @@ pushd target/linux/generic/hack-5.4
 #wget https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/999-shortcut-fe-support.patch
 popd
+#OC
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/999-unlock-1608mhz-rk3328.patch
 
 ##获取额外package
 #更换GCC版本
@@ -139,7 +140,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 mkdir package/base-files/files/usr/bin
 cp -f ../SCRIPTS/fuck package/base-files/files/usr/bin/fuck
 #ChinaDns
-wget -qO package/base-files/files/usr/bin/chinadnslist https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
+wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 #修正架构

@@ -4,7 +4,11 @@
 cd /overlay
 rm -rf `ls | egrep -v '(upper|.fs_state)'`
 cd upper
-rm -rf `ls | egrep -v '(etc)'`
-cd etc
+rm -rf `ls | egrep -v '(etc|usr)'`
+cd usr
+rm -rf `ls | egrep -v '(bin)'`
+cd bin
+rm -rf `ls | egrep -v '(AdGuardHome)'`
+cd ../../etc
 rm -rf `ls | egrep -v '(config|samba|ssr|bench.log|passwd|shadow|sysupgrade.conf)'`
 sleep 5 && touch /etc/banner && reboot
