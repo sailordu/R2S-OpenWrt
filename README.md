@@ -31,6 +31,8 @@
 - AdGuardHome
 - ChinaDns-ng
 - SmartDns
+- Cpufreq
+- wrtbwmon
 - Transmission
 - BearDropper（群里NateLol大佬开发的ssh防护）
 - oled-app（还是NateLol开发的oled屏幕支持app）
