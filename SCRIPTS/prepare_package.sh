@@ -58,9 +58,9 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 #更换GCC版本
 rm -rf ./feeds/packages/devel/gcc
 svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/gcc
-#回滚zstd
-rm -rf ./feeds/packages/utils/zstd
-svn co https://github.com/QiuSimons/Others/tree/master/zstd feeds/packages/utils/zstd
+#fix zstd
+sed -i '/PKG_SOURCE_URL/d' feeds/packages/utils/zstd/Makefile
+sed -i 'a,PKG_SOURCE:=,PKG_SOURCE_URL:=https://codeload.github.com/facebook/zstd/tar.gz/v$(PKG_VERSION)' feeds/packages/utils/zstd/Makefile
 #arpbind
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
