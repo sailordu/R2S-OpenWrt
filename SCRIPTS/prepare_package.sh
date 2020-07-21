@@ -60,7 +60,7 @@ rm -rf ./feeds/packages/devel/gcc
 svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/gcc
 #fix zstd
 sed -i '/PKG_SOURCE_URL/d' feeds/packages/utils/zstd/Makefile
-sed -i 'a,PKG_SOURCE:=,PKG_SOURCE_URL:=https://codeload.github.com/facebook/zstd/tar.gz/v$(PKG_VERSION)' feeds/packages/utils/zstd/Makefile
+sed -i '/PKG_SOURCE:=/a\PKG_SOURCE_URL:=https://codeload.github.com/facebook/zstd/tar.gz/v$(PKG_VERSION)' feeds/packages/utils/zstd/Makefile
 #arpbind
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
