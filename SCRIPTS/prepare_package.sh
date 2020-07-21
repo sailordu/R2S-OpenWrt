@@ -65,6 +65,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
 #luci-app-freq
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/luci-app-cpufreq package/lean/luci-app-cpufreq
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-app-freq.patch
+patch -p1 < ./luci-app-freq.patch
 #DDNS
 rm -rf ./feeds/packages/net/ddns-scripts
 rm -rf ./feeds/luci/applications/luci-app-ddns
