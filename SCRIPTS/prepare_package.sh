@@ -119,12 +119,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/simple-obfs packa
 svn co https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev package/lean/shadowsocks-libev
 #svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan package/lean/trojan
 svn co https://github.com/project-openwrt/openwrt/trunk/package/lean/tcpping package/lean/tcpping
-#PASSWALL
-svn co https://github.com/Lienol/openwrt-package/trunk/lienol/luci-app-passwall package/new/luci-app-passwall
-svn co https://github.com/Lienol/openwrt-package/trunk/package/tcping package/new/tcping
-svn co https://github.com/Lienol/openwrt-package/trunk/package/trojan-go package/new/trojan-go
-svn co https://github.com/Lienol/openwrt-package/trunk/package/brook package/new/brook
-svn co https://github.com/Lienol/openwrt-package/trunk/package/trojan package/new/trojan
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 #流量监视
