@@ -67,13 +67,13 @@ svn co https://github.com/NateLol/natelol/trunk/luci-app-beardropper package/new
 #luci-app-freq
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/luci-app-cpufreq package/lean/luci-app-cpufreq
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/luci-app-freq.patch
+patch -p1 < ./luci-app-freq.patch
 #arpbind
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore package/lean/autocore
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/lean/coremark
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
-patch -p1 < ./luci-app-freq.patch
 #DDNS
 rm -rf ./feeds/packages/net/ddns-scripts
 rm -rf ./feeds/luci/applications/luci-app-ddns
