@@ -117,7 +117,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipt2socks package
 #git clone -b master --single-branch https://github.com/aa65535/openwrt-simple-obfs package/lean/simple-obfs
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/simple-obfs package/lean/simple-obfs
 svn co https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev package/lean/shadowsocks-libev
-#svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan package/lean/trojan
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan package/lean/trojan
 svn co https://github.com/project-openwrt/openwrt/trunk/package/lean/tcpping package/lean/tcpping
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
