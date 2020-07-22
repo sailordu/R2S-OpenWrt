@@ -71,8 +71,6 @@ wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PAT
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore package/lean/autocore
-sed -i 's,*/,,g' package/lean/autocore/files/arm/rpcd_10_system.js
-sed -i 's,/*,,g' package/lean/autocore/files/arm/rpcd_10_system.js
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/lean/coremark
 sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
 patch -p1 < ./luci-app-freq.patch
