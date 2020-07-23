@@ -88,8 +88,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autorebo
 #argon主题
 git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
 #rosy主题
-rm -rf ./feeds/luci/themes/luci-theme-rosy
-svn co https://github.com/project-openwrt/luci/branches/openwrt-19.07/themes/luci-theme-rosy feeds/luci/themes/luci-theme-rosy
+# rm -rf ./feeds/luci/themes/luci-theme-rosy
+# svn co https://github.com/project-openwrt/luci/branches/openwrt-19.07/themes/luci-theme-rosy feeds/luci/themes/luci-theme-rosy
 #AdGuard
 git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome package/new/luci-app-adguardhome
 #ChinaDNS
