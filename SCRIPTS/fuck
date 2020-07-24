@@ -10,5 +10,5 @@ rm -rf `ls | egrep -v '(bin)'`
 cd bin
 rm -rf `ls | egrep -v '(AdGuardHome)'`
 cd ../../etc
-rm -rf `ls | egrep -v '(config|samba|ssr|bench.log|passwd|shadow|luci-wrtbwmon.conf|sysupgrade.conf)'`
+rm -rf `ls | egrep -v '(config|chinadns-ng|samba|smartdns|ssr|bench.log|passwd|shadow|AdGuardHome.yaml|luci-wrtbwmon.conf|sysupgrade.conf)'`
 sleep 5 && touch /etc/banner && reboot
