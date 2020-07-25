@@ -36,7 +36,6 @@ CONFIG_SND_SOC_ROCKCHIP_I2S=m
 CONFIG_SND_SOC_ROCKCHIP_PDM=m
 CONFIG_SND_SOC_ROCKCHIP_SPDIF=m
 ' >> ./target/linux/rockchip/armv8/config-5.4
-
 cd ..
 #等待上游修复后使用
 #git clone -b nanopi-r2s https://git.openwrt.org/openwrt/staging/blocktrron.git openwrt
@@ -46,5 +45,4 @@ cd openwrt
 #git rebase upstream/master
 sed -i "s/# CONFIG_ROCKCHIP_THERMAL is not set/CONFIG_ROCKCHIP_THERMAL=y/g" target/linux/rockchip/armv8/config-5.4
 cd ..
-git clone -b dev-19.07 --single-branch https://github.com/Lienol/openwrt openwrt-lienol
 exit 0

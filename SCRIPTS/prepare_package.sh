@@ -107,8 +107,7 @@ git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argo
 # rm -rf ./feeds/luci/themes/luci-theme-rosy
 # svn co https://github.com/project-openwrt/luci/branches/openwrt-19.07/themes/luci-theme-rosy feeds/luci/themes/luci-theme-rosy
 #AdGuard
-cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
-cp -rf ../openwrt-lienol/package/diy/adguardhome ./package/new/AdGuardHome
+git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome package/new/luci-app-adguardhome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
