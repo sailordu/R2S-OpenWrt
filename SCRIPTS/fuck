@@ -4,12 +4,8 @@
 cd /overlay
 rm -rf `ls | egrep -v '(upper|.fs_state)'`
 cd upper
-rm -rf `ls | egrep -v '(etc|usr)'`
-cd usr
-rm -rf `ls | egrep -v '(bin)'`
-cd bin
-rm -rf `ls | egrep -v '(AdGuardHome)'`
-cd ../../etc/config
+rm -rf `ls | egrep -v '(etc)'`
+cd etc/config
 rm -rf `ls | egrep '(luci|ucitrack)'`
 cd ..
 rm -rf `ls | egrep -v '(config|chinadns-ng|samba|smartdns|ssr|bench.log|passwd|shadow|AdGuardHome.yaml|luci-wrtbwmon.conf|sysupgrade.conf)'`
