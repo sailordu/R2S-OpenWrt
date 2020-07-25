@@ -18,14 +18,21 @@ sed -i 's/O2/O3/g' ./rules.mk
 sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
+#patch i2c0
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
+#patch r8152 led
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/991-r8152-Add-module-param-for-customized-LEDs.patch
+#some rework
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/005-rockchip-rk3328-add-idle-state.patch
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/102-rockchip-add-usb3-controller-driver-for-RK3328-SoCs.patch
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/103-rockchip-add-hwmon-support-for-SoCs-and-GPUs.patch
+
 #patch rk-crypto
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
 patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
-#等待上游修复后使用
-#patch i2c0
-# wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
-#patch r8152 led
-# wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/991-r8152-Add-module-param-for-customized-LEDs.patch
+#patch rk3328_config
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
+patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
 #patch jsonc
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
@@ -35,6 +42,8 @@ wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PAT
 wget -P package/network/services/dnsmasq/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/900-add-filter-aaaa-option.patch
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
+rm -rf ./package/base-files/files/etc/init.d/boot
+wget -P package/base-files/files/etc/init.d https://raw.githubusercontent.com/project-openwrt/openwrt/18.06-kernel5.4/package/base-files/files/etc/init.d/boot
 #Patch FireWall 以增添fullcone功能
 mkdir package/network/config/firewall/patches
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
@@ -101,13 +110,9 @@ svn co https://github.com/openwrt/luci/branches/openwrt-18.06/applications/luci-
 git clone -b master --single-branch https://github.com/NateLol/luci-app-oled package/new/luci-app-oled
 #定时重启
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autoreboot package/lean/luci-app-autoreboot
-#argon主题
-git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
-#rosy主题
-# rm -rf ./feeds/luci/themes/luci-theme-rosy
-# svn co https://github.com/project-openwrt/luci/branches/openwrt-19.07/themes/luci-theme-rosy feeds/luci/themes/luci-theme-rosy
 #AdGuard
-git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome package/new/luci-app-adguardhome
+cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
+svn co https://github.com/project-openwrt/openwrt/branches/openwrt-19.07/package/ntlf9t/AdGuardHome package/new/AdGuardHome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
@@ -143,9 +148,12 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree 
 #流量监视
 git clone -b master --single-branch https://github.com/brvphoenix/wrtbwmon package/new/wrtbwmon
 git clone -b master --single-branch https://github.com/brvphoenix/luci-app-wrtbwmon package/new/luci-app-wrtbwmon
-#frps
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
+#frp
+rm -f ./feeds/luci/applications/luci-app-frps
+rm -rf ./feeds/packages/net/frp
+rm -f ./package/feeds/packages/frp
+git clone https://github.com/lwz322/luci-app-frps.git package/lean/luci-app-frps
+svn co https://github.com/openwrt/packages/trunk/net/frp package/feeds/packages/frp
 #transmission-web-control
 rm -rf ./feeds/packages/net/transmission*
 rm -rf ./feeds/luci/applications/luci-app-transmission/
@@ -175,7 +183,7 @@ wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/proj
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 #修正架构
-sed -i "s,boardinfo.system,'ARMv8',g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+#sed -i "s,boardinfo.system,'ARMv8',g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 #adjust_network
 wget -qO package/base-files/files/etc/init.d/zzz_adjust_network https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/adjust_network
 #删除已有配置
