@@ -22,7 +22,7 @@ jobs:
     steps:
 
       - name: Clone Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       # self-hosted nolonger need start
       - name: free disk space
@@ -128,7 +128,7 @@ jobs:
           echo "##[set-output name=release_tag;]$release_tag"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM
           path: ./artifact.zip
