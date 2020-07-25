@@ -31,8 +31,8 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
 patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #patch rk3328_config
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
-patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
+# wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
+# patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
 #patch jsonc
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
