@@ -19,12 +19,13 @@ sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
 #patch rk-crypto
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patchh
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
 patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
+#等待上游修复后使用
 #patch i2c0
-wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
+# wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch r8152 led
-wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/991-r8152-Add-module-param-for-customized-LEDs.patch
+# wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/991-r8152-Add-module-param-for-customized-LEDs.patch
 #patch jsonc
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
@@ -56,6 +57,21 @@ popd
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/999-unlock-1608mhz-rk3328.patch
 
 ##获取额外package
+#更换Node版本
+rm -rf ./feeds/packages/lang/node
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node feeds/packages/lang/node
+rm -rf ./feeds/packages/lang/node-arduino-firmata
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-arduino-firmata feeds/packages/lang/node-arduino-firmata
+rm -rf ./feeds/packages/lang/node-cylon
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-cylon feeds/packages/lang/node-cylon
+rm -rf ./feeds/packages/lang/node-hid
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-hid feeds/packages/lang/node-hid
+rm -rf ./feeds/packages/lang/node-homebridge
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-homebridge feeds/packages/lang/node-homebridge
+rm -rf ./feeds/packages/lang/node-serialport
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-serialport feeds/packages/lang/node-serialport
+rm -rf ./feeds/packages/lang/node-serialport-bindings
+svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-serialport-bindings feeds/packages/lang/node-serialport-bindings
 #更换GCC版本
 rm -rf ./feeds/packages/devel/gcc
 svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/gcc
@@ -91,7 +107,8 @@ git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argo
 # rm -rf ./feeds/luci/themes/luci-theme-rosy
 # svn co https://github.com/project-openwrt/luci/branches/openwrt-19.07/themes/luci-theme-rosy feeds/luci/themes/luci-theme-rosy
 #AdGuard
-git clone -b master --single-branch https://github.com/rufengsuixing/luci-app-adguardhome package/new/luci-app-adguardhome
+cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
+cp -rf ../openwrt-lienol/package/diy/adguardhome ./package/new/AdGuardHome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
