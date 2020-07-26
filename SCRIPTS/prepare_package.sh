@@ -18,6 +18,8 @@ sed -i 's/O2/O3/g' ./rules.mk
 sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
+notExce(){
+#等待上游修复后使用
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch r8152 led
@@ -27,12 +29,13 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/102-rockchip-add-usb3-controller-driver-for-RK3328-SoCs.patch
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/103-rockchip-add-hwmon-support-for-SoCs-and-GPUs.patch
 rm -rf ./target/linux/rockchip/patches-5.4/101-dts-rockchip-add-usb3-controller-node-for-RK3328-SoCs.patch
-#patch rk-crypto
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
-patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #patch rk3328_config
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
 patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
+}
+#patch rk-crypto
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
+patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #patch jsonc
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
@@ -110,6 +113,8 @@ svn co https://github.com/openwrt/luci/branches/openwrt-18.06/applications/luci-
 git clone -b master --single-branch https://github.com/NateLol/luci-app-oled package/new/luci-app-oled
 #定时重启
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autoreboot package/lean/luci-app-autoreboot
+#argon主题
+git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
 #AdGuard
 git clone -b master --single-branch https://github.com/adamw92/luci-app-adguardhome package/new/luci-app-adguardhome
 #ChinaDNS

@@ -60,8 +60,8 @@ jobs:
 
       - name: Prepare Sources
         run: |
-          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/01_get_ready.sh
-          #cp -r ./SCRIPTS/get_ready.sh ./01_get_ready.sh
+          #wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/01_get_ready.sh
+          cp -r ./SCRIPTS/get_ready.sh ./01_get_ready.sh
           /bin/bash ./01_get_ready.sh
 
       - name: Prepare Package
