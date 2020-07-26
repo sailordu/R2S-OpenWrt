@@ -111,8 +111,7 @@ git clone -b master --single-branch https://github.com/NateLol/luci-app-oled pac
 #定时重启
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autoreboot package/lean/luci-app-autoreboot
 #AdGuard
-cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
-svn co https://github.com/project-openwrt/openwrt/branches/openwrt-19.07/package/ntlf9t/AdGuardHome package/new/AdGuardHome
+git clone -b master --single-branch https://github.com/adamw92/luci-app-adguardhome package/new/luci-app-adguardhome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
@@ -149,10 +148,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree 
 git clone -b master --single-branch https://github.com/brvphoenix/wrtbwmon package/new/wrtbwmon
 git clone -b master --single-branch https://github.com/brvphoenix/luci-app-wrtbwmon package/new/luci-app-wrtbwmon
 #frp
-rm -f ./feeds/luci/applications/luci-app-frps
-rm -rf ./feeds/packages/net/frp
-git clone https://github.com/lwz322/luci-app-frps.git package/lean/luci-app-frps
-svn co https://github.com/openwrt/packages/trunk/net/frp feeds/packages/net/frp
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
 #transmission-web-control
 rm -rf ./feeds/packages/net/transmission*
 rm -rf ./feeds/luci/applications/luci-app-transmission/
