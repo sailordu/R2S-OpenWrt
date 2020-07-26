@@ -46,4 +46,5 @@ git remote add upstream https://github.com/openwrt/openwrt.git && git fetch upst
 git rebase upstream/master
 cd ..
 }
+git clone -b dev-19.07 --single-branch https://github.com/Lienol/openwrt openwrt-lienol
 exit 0

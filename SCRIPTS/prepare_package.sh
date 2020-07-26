@@ -116,7 +116,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autorebo
 #argon主题
 git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
 #AdGuard
-git clone -b master --single-branch https://github.com/adamw92/luci-app-adguardhome package/new/luci-app-adguardhome
+cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
+cp -rf ../openwrt-lienol/package/diy/adguardhome ./package/new/AdGuardHome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
