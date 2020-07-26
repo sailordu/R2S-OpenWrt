@@ -1,3 +1,7 @@
+## 20200726
+* 修复AdGuardHome问题
+* 新版argon主题非常棒,推荐使用
+
 ## 20200724
 * 增加argon主题
 * 增加cpufreq
