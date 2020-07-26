@@ -151,9 +151,8 @@ git clone -b master --single-branch https://github.com/brvphoenix/luci-app-wrtbw
 #frp
 rm -f ./feeds/luci/applications/luci-app-frps
 rm -rf ./feeds/packages/net/frp
-rm -f ./package/feeds/packages/frp
 git clone https://github.com/lwz322/luci-app-frps.git package/lean/luci-app-frps
-svn co https://github.com/openwrt/packages/trunk/net/frp package/feeds/packages/frp
+svn co https://github.com/openwrt/packages/trunk/net/frp feeds/packages/net/frp
 #transmission-web-control
 rm -rf ./feeds/packages/net/transmission*
 rm -rf ./feeds/luci/applications/luci-app-transmission/
