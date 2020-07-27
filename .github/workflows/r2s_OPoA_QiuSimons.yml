@@ -7,7 +7,7 @@ on:
   #   paths:
   #     - '.github/workflows/r2s_OPoA_QiuSimons.yml'
   schedule:
-    - cron: '00 04 * * 5'
+    - cron: '00 04 * * 1'
   watch:
     types: [started]
 
