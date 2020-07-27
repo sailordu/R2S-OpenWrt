@@ -184,8 +184,6 @@ cp -f ../SCRIPTS/fuck package/base-files/files/usr/bin/fuck
 wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
-#修正架构
-#sed -i "s,boardinfo.system,'ARMv8',g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 #adjust_network
 wget -qO package/base-files/files/etc/init.d/zzz_adjust_network https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/adjust_network
 #删除已有配置
