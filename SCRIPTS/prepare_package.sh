@@ -18,10 +18,10 @@ sed -i 's/O2/O3/g' ./rules.mk
 sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
-notExce(){
-#等待上游修复后使用
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
+#等待上游修复后使用
+notExce(){
 #patch r8152 led
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/991-r8152-Add-module-param-for-customized-LEDs.patch
 #some rework
@@ -29,10 +29,10 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/102-rockchip-add-usb3-controller-driver-for-RK3328-SoCs.patch
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/rework/103-rockchip-add-hwmon-support-for-SoCs-and-GPUs.patch
 rm -rf ./target/linux/rockchip/patches-5.4/101-dts-rockchip-add-usb3-controller-node-for-RK3328-SoCs.patch
+}
 #patch rk3328_config
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
 patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
-}
 #patch rk-crypto
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
 patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
@@ -176,6 +176,68 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 rm -rf ./feeds/packages/utils/zstd
 svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
 
+#crypto
+echo '
+CONFIG_ARM64_CRYPTO=y
+CONFIG_CRYPTO_AES_ARM64=y
+CONFIG_CRYPTO_AES_ARM64_BS=y
+CONFIG_CRYPTO_AES_ARM64_CE=y
+CONFIG_CRYPTO_AES_ARM64_CE_BLK=y
+CONFIG_CRYPTO_AES_ARM64_CE_CCM=y
+CONFIG_CRYPTO_AES_ARM64_NEON_BLK=y
+CONFIG_CRYPTO_AUTHENC=y
+CONFIG_CRYPTO_CBC=y
+CONFIG_CRYPTO_CHACHA20=y
+CONFIG_CRYPTO_CHACHA20_NEON=y
+CONFIG_CRYPTO_CRYPTD=y
+CONFIG_CRYPTO_CTR=y
+CONFIG_CRYPTO_DEV_CCREE=y
+CONFIG_CRYPTO_DEV_HISI_SEC=y
+CONFIG_CRYPTO_DRBG=y
+CONFIG_CRYPTO_DRBG_CTR=y
+CONFIG_CRYPTO_DRBG_HASH=y
+CONFIG_CRYPTO_DRBG_HMAC=y
+CONFIG_CRYPTO_DRBG_MENU=y
+CONFIG_CRYPTO_ECB=y
+CONFIG_CRYPTO_GF128MUL=y
+CONFIG_CRYPTO_GHASH_ARM64_CE=y
+CONFIG_CRYPTO_HMAC=y
+CONFIG_CRYPTO_HW=y
+CONFIG_CRYPTO_JITTERENTROPY=y
+CONFIG_CRYPTO_LIB_DES=y
+CONFIG_CRYPTO_LIB_SHA256=y
+CONFIG_CRYPTO_MD5=y
+CONFIG_CRYPTO_NHPOLY1305=y
+CONFIG_CRYPTO_NHPOLY1305_NEON=y
+CONFIG_CRYPTO_NULL=y
+CONFIG_CRYPTO_POLY1305=y
+CONFIG_CRYPTO_RNG=y
+CONFIG_CRYPTO_RNG_DEFAULT=y
+CONFIG_CRYPTO_SEQIV=y
+CONFIG_CRYPTO_SHA1=y
+CONFIG_CRYPTO_SHA1_ARM64_CE=y
+CONFIG_CRYPTO_SHA256=y
+CONFIG_CRYPTO_SHA256_ARM64=y
+CONFIG_CRYPTO_SHA2_ARM64_CE=y
+CONFIG_CRYPTO_SHA3=y
+CONFIG_CRYPTO_SHA3_ARM64=y
+CONFIG_CRYPTO_SHA512=y
+CONFIG_CRYPTO_SHA512_ARM64=y
+CONFIG_CRYPTO_SHA512_ARM64_CE=y
+CONFIG_CRYPTO_SIMD=y
+CONFIG_CRYPTO_SM3=y
+CONFIG_CRYPTO_SM3_ARM64_CE=y
+CONFIG_CRYPTO_SM4=y
+CONFIG_CRYPTO_SM4_ARM64_CE=y
+CONFIG_CRYPTO_USER_API=y
+CONFIG_CRYPTO_USER_API_AEAD=y
+CONFIG_CRYPTO_USER_API_HASH=y
+CONFIG_CRYPTO_USER_API_RNG=y
+CONFIG_CRYPTO_USER_API_SKCIPHER=y
+CONFIG_CRYPTO_XTS=y
+CONFIG_SG_SPLIT=y
+' >> ./target/linux/rockchip/armv8/config-5.4
+
 ##最后的收尾工作
 #Lets Fuck
 mkdir package/base-files/files/usr/bin
@@ -184,8 +246,12 @@ cp -f ../SCRIPTS/fuck package/base-files/files/usr/bin/fuck
 wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
+notExce(){
+#修正架构
+sed -i "s,boardinfo.system,'ARMv8',g" feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 #adjust_network
 wget -qO package/base-files/files/etc/init.d/zzz_adjust_network https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/adjust_network
+}
 #删除已有配置
 rm -rf .config
 #授予权限
