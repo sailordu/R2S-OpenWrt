@@ -9,11 +9,7 @@ sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999
 sed -i "s/#uci set luci.main.mediaurlbase/uci set luci.main.mediaurlbase/g" package/lean/lean-translate/files/zzz-default-settings
 sed -i "s/#uci commit luci/uci commit luci/g" package/lean/lean-translate/files/zzz-default-settings
 sed -i '/uci commit luci/a\uci commit network' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci delete network.lan.ip6assign' package/lean/lean-translate/files/zzz-default-settings
 sed -i '/uci commit luci/a\uci delete network.wan6' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci commit dhcp' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci delete dhcp.lan.ra' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci delete dhcp.lan.dhcpv6' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci delete dhcp.lan.ndp' package/lean/lean-translate/files/zzz-default-settings
 sed -i '/uci commit luci/a\uci commit dropbear' package/lean/lean-translate/files/zzz-default-settings
 sed -i "/uci commit luci/a\uci set dropbear.@dropbear[0].Interface='lan'" package/lean/lean-translate/files/zzz-default-settings
+sed -i '/exit 0/i\/etc/init.d/dropbear restart' package/lean/lean-translate/files/zzz-default-settings
