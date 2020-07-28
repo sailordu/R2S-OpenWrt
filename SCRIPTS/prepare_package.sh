@@ -177,7 +177,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 rm -rf ./feeds/packages/utils/zstd
 svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
 #patch dropbear
-patch -p1 ../SCRIPTS/dropbear-onlyLan.patch
+patch -p1 < ../SCRIPTS/dropbear-onlyLan.patch
 
 #crypto
 echo '
