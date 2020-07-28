@@ -15,10 +15,10 @@
 * ipv4: 192.168.2.1
 * username: root
 * password: password
-* 官方源,原汁原味非杂交
+* **7月29日起,r2s正式合入官方源** 原汁原味非杂交!
 * 添加Flow Offload/SFE(只能二选一,默认开启SFE)+Full Cone Nat+BBR
 * **1.608Ghz超频** 感谢QiuSimons大佬的辛苦付出和测试
-* 没有上传文件的app,没啥用去掉了 scp和sftp都支持
+* 支持scp和sftp
 * 无usb-wifi支持
 * 原生OP内置升级可用,固件重置可用
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
@@ -30,12 +30,12 @@
 - Cpufreq
 - wrtbwmon
 - Transmission
-- BearDropper（群里NateLol大佬开发的ssh防护）
-- oled-app（还是NateLol开发的oled屏幕支持app）
+- BearDropper
+- oled-app
 - ddns
 - wol网络唤醒
 - samba4
-- frps(注意是服务端)
+- frps
 - kms
 - **r-Plus
 - sqm-qos
