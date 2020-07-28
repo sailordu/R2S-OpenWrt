@@ -121,6 +121,7 @@ cp -rf ../openwrt-lienol/package/diy/adguardhome ./package/new/AdGuardHome
 #ChinaDNS
 git clone -b luci --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/luci-chinadns-ng
 git clone -b master --single-branch https://github.com/pexcn/openwrt-chinadns-ng package/new/chinadns-ng
+wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
 #SmartDNS
 svn co https://github.com/pymumu/smartdns/trunk/package/openwrt package/new/smartdns
 git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns package/new/luci-app-smartdns/
@@ -175,6 +176,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 #回滚zstd
 rm -rf ./feeds/packages/utils/zstd
 svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
+#patch dropbear
+patch -p1 ../SCRIPTS/dropbear-onlyLan.patch
 
 #crypto
 echo '
@@ -243,8 +246,6 @@ CONFIG_SG_SPLIT=y
 #Lets Fuck
 mkdir package/base-files/files/usr/bin
 cp -f ../SCRIPTS/fuck package/base-files/files/usr/bin/fuck
-#ChinaDns
-wget -P package/base-files/files/usr/bin/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/chinadnslist
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 notExce(){

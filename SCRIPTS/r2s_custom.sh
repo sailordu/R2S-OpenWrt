@@ -10,6 +10,3 @@ sed -i "s/#uci set luci.main.mediaurlbase/uci set luci.main.mediaurlbase/g" pack
 sed -i "s/#uci commit luci/uci commit luci/g" package/lean/lean-translate/files/zzz-default-settings
 sed -i '/uci commit luci/a\uci commit network' package/lean/lean-translate/files/zzz-default-settings
 sed -i '/uci commit luci/a\uci delete network.wan6' package/lean/lean-translate/files/zzz-default-settings
-sed -i '/uci commit luci/a\uci commit dropbear' package/lean/lean-translate/files/zzz-default-settings
-sed -i "/uci commit luci/a\uci set dropbear.@dropbear[0].Interface='lan'" package/lean/lean-translate/files/zzz-default-settings
-sed -i '/exit 0/i\/etc/init.d/dropbear restart' package/lean/lean-translate/files/zzz-default-settings
