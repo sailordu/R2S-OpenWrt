@@ -15,7 +15,7 @@
 * ipv4: 192.168.2.1
 * username: root
 * password: password
-* **7月29日起,r2s正式合入官方源** 原汁原味非杂交!
+* **7月29日起,r2s支持正式合入官方源** 原汁原味非杂交! 感谢r2s Club天灵/GC/QC等诸多大佬的努力!
 * 添加Flow Offload/SFE(只能二选一,默认开启SFE)+Full Cone Nat+BBR
 * **1.608Ghz超频** 感谢QiuSimons大佬的辛苦付出和测试
 * 支持scp和sftp
