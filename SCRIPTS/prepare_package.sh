@@ -20,9 +20,6 @@ sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 ##必要的patch
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
-#patch rk3328_config
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
-patch -p1 < ./0001-target-linux-improve-friendlyarm-nanopi-r2s-support.patch
 #patch rk-crypto
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/kernel_crypto-add-rk3328-crypto-support.patch
 patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
