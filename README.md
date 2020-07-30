@@ -24,8 +24,6 @@
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
 
 ## 插件清单
-- AdGuardHome
-- ChinaDns-ng
 - SmartDns
 - Cpufreq
 - wrtbwmon
