@@ -80,6 +80,12 @@ jobs:
           wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/04_remove_upx.sh
           /bin/bash 04_remove_upx.sh
 
+      - name: Add ACL
+        run: |
+          cd openwrt
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/05_create_acl_for_luci.sh
+          /bin/bash 05_create_acl_for_luci.sh -a
+
       - name: Custom config
         run: |
           cd openwrt
@@ -108,8 +114,8 @@ jobs:
       - name: Cleaning
         run: |
           cd openwrt/bin/targets/rockchip/armv8
-          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/05_cleaning.sh
-          /bin/bash ./05_cleaning.sh
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/06_cleaning.sh
+          /bin/bash ./06_cleaning.sh
 
       - name: Assemble Artifact
         id: assemble_artifact
