@@ -165,6 +165,7 @@ svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
 #crypto
 echo '
 CONFIG_ARM64_CRYPTO=y
+CONFIG_CGROUP_HUGETLB=y
 CONFIG_CRYPTO_AES_ARM64=y
 CONFIG_CRYPTO_AES_ARM64_BS=y
 CONFIG_CRYPTO_AES_ARM64_CE=y
