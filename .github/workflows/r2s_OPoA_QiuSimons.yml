@@ -86,12 +86,6 @@ jobs:
           wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/05_create_acl_for_luci.sh
           /bin/bash 05_create_acl_for_luci.sh -a
 
-      - name: Custom config
-        run: |
-          cd openwrt
-          cp -r ../SCRIPTS/r2s_custom.sh ./r2s_custom.sh
-          /bin/bash r2s_custom.sh
-
       - name: Make Config
         run: |
           cd openwrt
