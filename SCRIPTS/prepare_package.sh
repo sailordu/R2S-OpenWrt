@@ -11,7 +11,7 @@ sed -i 's/snapshots//g' package/base-files/image-config.in
 sed -i 's/ %V,//g' package/base-files/files/etc/banner
 #使用O3级别的优化
 sed -i 's/Os/O3/g' include/target.mk
-sed -i 's/O2/Ofast/g' ./rules.mk
+sed -i 's/O2/O3/g' ./rules.mk
 #更新feed
 ./scripts/feeds update -a && ./scripts/feeds install -a
 #irqbalance
