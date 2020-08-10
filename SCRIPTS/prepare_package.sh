@@ -15,9 +15,11 @@ sed -i 's/O2/O3/g' ./rules.mk
 #更新feed
 ./scripts/feeds update -a && ./scripts/feeds install -a
 #irqbalance
-sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
+#sed -i 's/0/1/g' feeds/packages/utils/irqbalance/files/irqbalance.config
 
 ##必要的patch
+#fix sd
+wget -P package/boot/uboot-rockchip/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/997-nanopi-r2s-improve-boot-failed.patch
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch rk-crypto
@@ -55,8 +57,8 @@ popd
 #OC
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
 #IRQ
-rm -rf ./target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
-wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/script/40-net-smp-affinity
+#rm -rf ./target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
+#wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/script/40-net-smp-affinity
 #SWAP LAN WAN
 #sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
