@@ -135,7 +135,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/ipt2socks package
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/simple-obfs package/lean/simple-obfs
 svn co https://github.com/coolsnowwolf/packages/trunk/net/shadowsocks-libev package/lean/shadowsocks-libev
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/trojan package/lean/trojan
-svn co https://github.com/project-openwrt/openwrt/trunk/package/lean/tcpping package/lean/tcpping
+svn co https://github.com/fw876/helloworld/trunk/tcping package/lean/tcping
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 #流量监视
@@ -225,6 +225,7 @@ CONFIG_CRYPTO_USER_API_HASH=y
 CONFIG_CRYPTO_USER_API_RNG=y
 CONFIG_CRYPTO_USER_API_SKCIPHER=y
 CONFIG_CRYPTO_XTS=y
+CONFIG_REGULATOR_GPIO=y
 CONFIG_SG_SPLIT=y
 ' >> ./target/linux/rockchip/armv8/config-5.4
 
