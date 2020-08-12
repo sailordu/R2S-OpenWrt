@@ -59,6 +59,7 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 #IRQ
 #rm -rf ./target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 #wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/script/40-net-smp-affinity
+sed -i '/;;/i\set_interface_core 8 "i2c" "i2c"' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 #SWAP LAN WAN
 #sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
