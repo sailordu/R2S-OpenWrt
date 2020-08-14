@@ -1,14 +1,6 @@
 # NanoPi-R2S-OpenWrt
  使用 Github Actions 在线编译 NanoPi-R2S 固件
 
-[![Openwrt From QiuSimons](https://github.com/msylgj/R2S-OpenWrt/workflows/Openwrt%20From%20QiuSimons/badge.svg)](https://github.com/msylgj/R2S-OpenWrt/actions?query=workflow%3A%22Openwrt+From+QiuSimons%22)
-
-## 发布地址
-[点我下载](https://github.com/msylgj/R2S-OpenWrt/releases)
-
-## 更新说明
-[经常会忘记写的更新说明](https://github.com/msylgj/R2S-OpenWrt/blob/master/CHANGELOG.md)
-
 ## 说明
 * Fork自QiuSimons大神的纯原生OP版本,个人根据**完全私人**口味进行了一定修改,建议去源库了解更多
     - [QiuSimons/R2S-OpenWrt](https://github.com/project-openwrt/R2S-OpenWrt)
