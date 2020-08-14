@@ -19,7 +19,7 @@ sed -i 's/O2/O3/g' ./rules.mk
 
 ##必要的patch
 #fix sd
-wget -P package/boot/uboot-rockchip/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/997-nanopi-r2s-improve-boot-failed.patch
+#wget -P package/boot/uboot-rockchip/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/997-nanopi-r2s-improve-boot-failed.patch
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch rk-crypto
