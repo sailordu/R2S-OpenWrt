@@ -169,6 +169,9 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 #回滚zstd
 rm -rf ./feeds/packages/utils/zstd
 svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
+#UPNP（回滚以解决某些沙雕设备的沙雕问题
+rm -rf ./feeds/packages/net/miniupnpd
+svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
 
 #crypto
 echo '
