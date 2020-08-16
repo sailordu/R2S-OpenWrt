@@ -1,6 +1,10 @@
 #!/bin/bash
 clear
 ##准备工作
+#Kernel
+wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3285.patch | patch -p1
+wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3277.patch | patch -p1
+wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3300.patch | patch -p1
 #使用19.07的feed源
 rm -f ./feeds.conf.default
 wget https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/feeds.conf.default
@@ -62,7 +66,7 @@ wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/pro
 sed -i '/;;/i\set_interface_core 8 "ff160000" "ff160000.i2c"' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 sed -i '/;;/i\set_interface_core 1 "ff150000" "ff150000.i2c"' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 #SWAP LAN WAN
-#sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
 ##获取额外package
 #更换Node版本
