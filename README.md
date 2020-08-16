@@ -11,7 +11,7 @@
 * 添加Flow Offload/SFE(只能二选一,默认开启SFE)+Full Cone Nat+BBR
 * **1.608Ghz超频** 感谢QiuSimons大佬的辛苦付出和测试
 * 支持scp和sftp
-* 无usb-wifi支持
+* 无usb-wifi支持.wan&lan交换
 * 原生OP内置升级可用,固件重置可用
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
 
