@@ -8,5 +8,5 @@ rm -rf `ls | egrep -v '(etc)'`
 cd etc/config
 rm -rf `ls | egrep '(luci|ucitrack)'`
 cd ..
-rm -rf `ls | egrep -v '(config|samba|smartdns|ssr|bench.log|passwd|shadow|luci-wrtbwmon.conf|sysupgrade.conf)'`
+rm -rf `ls | egrep -v '(config|openclash|samba|smartdns|bench.log|passwd|shadow|luci-wrtbwmon.conf|sysupgrade.conf)'`
 sleep 5 && touch /etc/banner && reboot
