@@ -3,7 +3,6 @@ clear
 ##准备工作
 #Kernel
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3277.patch | patch -p1
-wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3300.patch | patch -p1
 #使用19.07的feed源
 rm -f ./feeds.conf.default
 wget https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/feeds.conf.default
