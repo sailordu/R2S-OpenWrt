@@ -4,10 +4,14 @@ clear
 #Kernel
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3320.patch | patch -p1
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3277.patch | patch -p1
+wget -O- https://github.com/project-openwrt/openwrt/commit/abb0ba46c021595d49c35609b70e473e6c79d127.patch | patch -p1
+
 #使用19.07的feed源
 rm -f ./feeds.conf.default
 wget https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/feeds.conf.default
 wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/include/scons.mk
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
+patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #remove annoying snapshot tag
 sed -i 's/SNAPSHOT//g' include/version.mk
 sed -i 's/snapshots//g' package/base-files/image-config.in
@@ -100,7 +104,8 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind 
 #AutoCore
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore package/lean/autocore
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/lean/coremark
-sed -i 's,-DMULTIT,-Ofast -DMULTIT,g' package/lean/coremark/Makefile
+mkdir package/lean/coremark/patches
+wget -P package/lean/coremark/patches/ https://raw.githubusercontent.com/QiuSimons/Others/master/coremark.patch
 #DDNS
 rm -rf ./feeds/packages/net/ddns-scripts
 rm -rf ./feeds/luci/applications/luci-app-ddns
@@ -120,13 +125,11 @@ git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argo
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 #流量监视
-svn co https://github.com/brvphoenix/wrtbwmon/trunk/wrtbwmon package/new/wrtbwmon
-svn co https://github.com/brvphoenix/luci-app-wrtbwmon/trunk/luci-app-wrtbwmon package/new/luci-app-wrtbwmon
+git clone -b master --single-branch https://github.com/brvphoenix/wrtbwmon package/new/wrtbwmon
+git clone -b master --single-branch https://github.com/brvphoenix/luci-app-wrtbwmon package/new/luci-app-wrtbwmon
 #OpenClash
-git clone -b master --single-branch https://github.com/vernesong/OpenClash package/new/OpenClash
-mv package/new/OpenClash/luci-app-openclash package/new/luci-app-openclash
-rm -rf package/new/OpenClash
 #svn co https://github.com/vernesong/OpenClash/branches/master/luci-app-openclash package/new/luci-app-openclash
+git clone -b master --single-branch https://github.com/vernesong/OpenClash package/new/luci-app-openclash
 #frp
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
@@ -140,7 +143,7 @@ svn co https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-transmis
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-vlmcsd package/lean/luci-app-vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/lean/vlmcsd
 #FullCone模块
-svn co https://github.com/Lienol/openwrt/trunk/package/network/fullconenat package/new/fullconenat
+svn co https://github.com/Lienol/openwrt/trunk/package/network/fullconenat package/network/fullconenat
 #翻译及部分功能优化
 git clone -b master --single-branch https://github.com/QiuSimons/addition-trans-zh package/lean/lean-translate
 #SFE
