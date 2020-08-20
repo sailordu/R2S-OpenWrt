@@ -156,6 +156,11 @@ svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
 rm -rf ./feeds/packages/net/miniupnpd
 svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
 
+#kernel config
+echo '
+CONFIG_CGROUP_HUGETLB=n
+' >> ./target/linux/rockchip/armv8/config-5.4
+
 ##最后的收尾工作
 #Lets Fuck
 mkdir package/base-files/files/usr/bin
