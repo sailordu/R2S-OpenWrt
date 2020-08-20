@@ -26,8 +26,8 @@ sed -i 's/O2/O3/g' ./rules.mk
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch rk-crypto
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/kernel_crypto-add-rk3328-crypto-support.patch
-patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
+# wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/kernel_crypto-add-rk3328-crypto-support.patch
+# patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #luci network
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/luci_network-add-packet-steering.patch
 patch -p1 < ./luci_network-add-packet-steering.patch
@@ -155,73 +155,6 @@ svn co https://github.com/QiuSimons/Others/trunk/zstd feeds/packages/utils/zstd
 #UPNP（回滚以解决某些沙雕设备的沙雕问题
 rm -rf ./feeds/packages/net/miniupnpd
 svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
-
-#crypto
-echo '
-CONFIG_ARM64_CRYPTO=y
-CONFIG_CGROUP_HUGETLB=y
-CONFIG_CRYPTO_AES_ARM64=y
-CONFIG_CRYPTO_AES_ARM64_BS=y
-CONFIG_CRYPTO_AES_ARM64_CE=y
-CONFIG_CRYPTO_AES_ARM64_CE_BLK=y
-CONFIG_CRYPTO_AES_ARM64_CE_CCM=y
-CONFIG_CRYPTO_AES_ARM64_NEON_BLK=y
-CONFIG_CRYPTO_AUTHENC=y
-CONFIG_CRYPTO_CBC=y
-CONFIG_CRYPTO_CHACHA20=y
-CONFIG_CRYPTO_CHACHA20_NEON=y
-CONFIG_CRYPTO_CRCT10DIF_ARM64_CE=y
-CONFIG_CRYPTO_CRYPTD=y
-CONFIG_CRYPTO_CTR=y
-CONFIG_CRYPTO_DEV_CCREE=y
-CONFIG_CRYPTO_DEV_HISI_SEC=y
-CONFIG_CRYPTO_DRBG=y
-CONFIG_CRYPTO_DRBG_CTR=y
-CONFIG_CRYPTO_DRBG_HASH=y
-CONFIG_CRYPTO_DRBG_HMAC=y
-CONFIG_CRYPTO_DRBG_MENU=y
-CONFIG_CRYPTO_ECB=y
-CONFIG_CRYPTO_GF128MUL=y
-CONFIG_CRYPTO_GHASH_ARM64_CE=y
-CONFIG_CRYPTO_HMAC=y
-CONFIG_CRYPTO_HW=y
-CONFIG_CRYPTO_JITTERENTROPY=y
-CONFIG_CRYPTO_LIB_DES=y
-CONFIG_CRYPTO_LIB_SHA256=y
-CONFIG_CRYPTO_MD5=y
-CONFIG_CRYPTO_NHPOLY1305=y
-CONFIG_CRYPTO_NHPOLY1305_NEON=y
-CONFIG_CRYPTO_NULL=y
-CONFIG_CRYPTO_POLY1305=y
-CONFIG_CRYPTO_RNG=y
-CONFIG_CRYPTO_RNG_DEFAULT=y
-CONFIG_CRYPTO_SEQIV=y
-CONFIG_CRYPTO_SHA1=y
-CONFIG_CRYPTO_SHA1_ARM64_CE=y
-CONFIG_CRYPTO_SHA256=y
-CONFIG_CRYPTO_SHA256_ARM64=y
-CONFIG_CRYPTO_SHA2_ARM64_CE=y
-CONFIG_CRYPTO_SHA3=y
-CONFIG_CRYPTO_SHA3_ARM64=y
-CONFIG_CRYPTO_SHA512=y
-CONFIG_CRYPTO_SHA512_ARM64=y
-CONFIG_CRYPTO_SHA512_ARM64_CE=y
-CONFIG_CRYPTO_SIMD=y
-CONFIG_CRYPTO_SM3=y
-CONFIG_CRYPTO_SM3_ARM64_CE=y
-CONFIG_CRYPTO_SM4=y
-CONFIG_CRYPTO_SM4_ARM64_CE=y
-CONFIG_CRYPTO_USER_API=y
-CONFIG_CRYPTO_USER_API_AEAD=y
-CONFIG_CRYPTO_USER_API_HASH=y
-CONFIG_CRYPTO_USER_API_RNG=y
-CONFIG_CRYPTO_USER_API_SKCIPHER=y
-CONFIG_CRYPTO_XTS=y
-CONFIG_REGULATOR_GPIO=y
-CONFIG_SG_SPLIT=y
-CPU_FREQ=y
-CPU_FREQ_GOV_ONDEMAND=y
-' >> ./target/linux/rockchip/armv8/config-5.4
 
 ##最后的收尾工作
 #Lets Fuck
