@@ -11,8 +11,8 @@ wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
 patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #remove annoying snapshot tag
-sed -i 's/SNAPSHOT//g' include/version.mk
-sed -i 's/snapshots//g' package/base-files/image-config.in
+sed -i 's,SNAPSHOT,,g' include/version.mk
+sed -i 's,snapshots,,g' package/base-files/image-config.in
 sed -i 's/ %V,//g' package/base-files/files/etc/banner
 #使用O3级别的优化
 sed -i 's/Os/O2/g' include/target.mk
@@ -24,8 +24,8 @@ sed -i 's/O2/O2/g' ./rules.mk
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #patch rk-crypto
-# wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/kernel_crypto-add-rk3328-crypto-support.patch
-# patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/kernel_crypto-add-rk3328-crypto-support.patch
+patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #luci network
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/luci_network-add-packet-steering.patch
 patch -p1 < ./luci_network-add-packet-steering.patch
