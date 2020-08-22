@@ -153,7 +153,7 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 rm -rf ./feeds/packages/net/miniupnpd
 svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
 #disable-rk3328-eth-offloading
-wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/iface https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.1/target/linux/rockchip-rk3328/base-files/etc/hotplug.d/iface/12-disable-rk3328-eth-offloading
+# wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/iface https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.1/target/linux/rockchip-rk3328/base-files/etc/hotplug.d/iface/12-disable-rk3328-eth-offloading
 
 #kernel config
 echo '
