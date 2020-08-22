@@ -1,0 +1,143 @@
+name: Openwrt From QiuSimons
+
+on:
+  # push:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - '.github/workflows/r2s_OPoA_QiuSimons.yml'
+  schedule:
+    - cron: '00 04 * * 1'
+  watch:
+    types: [started]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    #runs-on: self-hosted
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+
+      - name: Clone Repository
+        uses: actions/checkout@v2
+
+      # self-hosted nolonger need start
+      - name: free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
+      - name: Delete old artifacts
+        uses: kolpav/purge-artifacts-action@v1
+        with:
+          token: ${{ secrets.workflow_token }}
+          expire-in: 1days # Setting this to 0 will delete all artifacts
+
+      - name: Init build dependencies
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          root_files=$(ls / | grep -vE '^(proc|run|sys)$' | sed 's:^:/:')
+          sudo -E du -ah $root_files | grep -E '^[0-9.]*?[GTPEZY]'
+          sudo -E docker image prune -a -f
+          sudo -E apt-get remove -y --purge azure-cli ghc zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E apt-get update -y
+          sudo -E apt-get install -y build-essential asciidoc binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch unzip zlib1g-dev lib32gcc1 libc6-dev-i386 subversion flex uglifyjs git-core gcc-multilib g++-multilib p7zip p7zip-full msmtp libssl-dev texinfo libreadline-dev libglib2.0-dev xmlto qemu-utils upx libelf-dev autoconf automake libtool autopoint ccache curl wget vim python python3 python-pip python3-pip python-ply python3-ply haveged lrzsz device-tree-compiler scons antlr3 gperf
+          wget -O - https://raw.githubusercontent.com/friendlyarm/build-env-on-ubuntu-bionic/master/install.sh | bash
+          sudo -E apt-get autoremove -y --purge
+          sudo -E apt-get clean -y
+          sudo -E rm -rf /usr/share/dotnet /usr/local/lib/android /usr/local/share/boost /opt/ghc /etc/mysql /etc/php
+          git clone https://github.com/friendlyarm/repo
+          sudo cp repo/repo /usr/bin/
+          df -h
+      # self-hosted nolonger need end
+
+      - name: Prepare Sources
+        run: |
+          git clone -b master https://git.openwrt.org/openwrt/openwrt.git openwrt
+      - name: Prepare Package
+        run: |
+          cd openwrt
+          cp -r ../SCRIPTS/prepare_package.sh ./prepare_package.sh
+          /bin/bash prepare_package.sh
+      - name: Convert Translation
+        run: |
+          cd openwrt
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/03_convert_translation.sh
+          /bin/bash 03_convert_translation.sh
+      - name: Remove Upx
+        run: |
+          cd openwrt
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/04_remove_upx.sh
+          /bin/bash 04_remove_upx.sh
+      - name: Add ACL
+        run: |
+          cd openwrt
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/05_create_acl_for_luci.sh
+          /bin/bash 05_create_acl_for_luci.sh -a
+      - name: Make Config
+        run: |
+          cd openwrt
+          mv ../SEED/config.seed .config
+          make defconfig
+          chmod -R 755 ./
+      - name: Make Toolchain
+        run: |
+          cd openwrt
+          let make_process=$(nproc)+1
+          make toolchain/install -j${make_process} V=s
+      - name: Compile Openwrt
+        run: |
+          cd openwrt
+          let make_process=$(nproc)+1
+          make -j${make_process} V=s || make -j${make_process} V=s
+      - name: Cleaning
+        run: |
+          cd openwrt/bin/targets/rockchip/armv8
+          wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/SCRIPTS/06_cleaning.sh
+          /bin/bash ./06_cleaning.sh
+      - name: Assemble Artifact
+        id: assemble_artifact
+        run: |
+          rm -rf ./artifact/
+          mkdir -p ./artifact/
+          cp openwrt/bin/targets/rockchip/armv8/*squashfs-sysupgrade.img.gz ./artifact/
+          cd openwrt
+          cp .config ../artifact/config-full
+          ./scripts/diffconfig.sh > ../artifact/config.seed
+          cd ..
+          zip -r artifact.zip ./artifact/
+          release_tag="R2S-OPoA-QiuSimons-$(date +%Y-%m-%d)"
+          echo "##[set-output name=release_tag;]$release_tag"
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM
+          path: ./artifact.zip
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.workflow_token }}
+        with:
+          tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
+          release_name: 自动发布 ${{ steps.assemble_artifact.outputs.release_tag }}
+          draft: false
+          prerelease: true
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.workflow_token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./artifact.zip
+          asset_name: ${{ steps.assemble_artifact.outputs.release_tag }}-ROM.zip
+          asset_content_type: application/zip
