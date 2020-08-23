@@ -67,9 +67,6 @@ sed -i '/;;/i\set_interface_core 1 "ff150000" "ff150000.i2c"' target/linux/rockc
 sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
 ##获取额外package
-#更换curl
-rm -rf ./package/network/utils/curl
-svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/utils/curl package/network/utils/curl
 #更换Node版本
 rm -rf ./feeds/packages/lang/node
 svn co https://github.com/nxhack/openwrt-node-packages/trunk/node feeds/packages/lang/node
