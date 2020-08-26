@@ -16,7 +16,7 @@
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
 
 ## 插件清单
-- SmartDns
+- OpenClash
 - Cpufreq
 - wrtbwmon
 - Transmission
@@ -27,7 +27,6 @@
 - samba4
 - frps
 - kms
-- **r-Plus
 - sqm-qos
 
 ## 升级方法
