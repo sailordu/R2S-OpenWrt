@@ -129,7 +129,7 @@ jobs:
           tag_name: ${{ steps.assemble_artifact.outputs.release_tag }}
           release_name: 自动发布 ${{ steps.assemble_artifact.outputs.release_tag }}
           draft: false
-          prerelease: true
+          prerelease: false
 
       - name: Upload Release Asset
         id: upload-release-asset
