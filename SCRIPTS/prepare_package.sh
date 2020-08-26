@@ -160,6 +160,7 @@ svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packag
 #kernel config
 echo '
 CONFIG_CGROUP_HUGETLB=n
+CONFIG_CRYPTO_CRCT10DIF_ARM64_CE=n
 CONFIG_ARM64_CRYPTO=y
 CONFIG_CRYPTO_AES_ARM64=y
 CONFIG_CRYPTO_AES_ARM64_BS=y
