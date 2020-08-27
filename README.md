@@ -16,18 +16,17 @@
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
 
 ## 插件清单
-- OpenClash
-- Cpufreq
-- wrtbwmon
-- Transmission
-- BearDropper
+- cpufreq
 - oled-app
+- BearDropper
+- OpenClash
 - ddns
-- wol网络唤醒
-- samba4
-- frps
-- kms
-- sqm-qos
+- WOL
+- vlmcsd
+- Samba4
+- Frps
+- Transmission
+- sqm-QoS
 
 ## 升级方法
 * 原生OP内置升级,可选保留配置
