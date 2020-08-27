@@ -7,6 +7,7 @@ CONFIG_DEVEL=y
 CONFIG_EXTRA_OPTIMIZATION="-fno-caller-saves -fno-plt"
 CONFIG_TARGET_OPTIONS=y
 CONFIG_TARGET_OPTIMIZATION="-O2 -pipe -march=armv8-a+crypto+crc"
+CONFIG_PACKAGE_rng-tools=y
 
 CONFIG_LUCI_LANG_zh_Hans=y
 CONFIG_LUCI_LANG_zh-cn=y
