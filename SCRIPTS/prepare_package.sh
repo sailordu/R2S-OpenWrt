@@ -126,9 +126,6 @@ git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argo
 #git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns package/new/luci-app-smartdns/
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
-#流量监视
-git clone -b master --single-branch https://github.com/brvphoenix/wrtbwmon package/new/wrtbwmon
-git clone -b master --single-branch https://github.com/brvphoenix/luci-app-wrtbwmon package/new/luci-app-wrtbwmon
 #OpenClash
 git clone -b master --single-branch https://github.com/vernesong/OpenClash package/new/luci-app-openclash
 #订阅转换
