@@ -63,8 +63,10 @@ patch -p1 < ./luci-app-firewall_add_sfe_switch.patch
 pushd target/linux/generic/hack-5.4
 wget https://raw.githubusercontent.com/Lienol/openwrt/dev-master/target/linux/generic/hack-5.4/999-01-shortcut-fe-support.patch
 popd
-#OC
+#OC-1608
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
+#OC-1512
+#wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/nicksun98/R2S-OpenWrt/master/PATCH/new/main/999-RK3328-enable-1512mhz-opp.patch
 #IRQ
 sed -i '/;;/i\set_interface_core 8 "ff160000" "ff160000.i2c"' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
 sed -i '/;;/i\set_interface_core 1 "ff150000" "ff150000.i2c"' target/linux/rockchip/armv8/base-files/etc/hotplug.d/net/40-net-smp-affinity
