@@ -3,10 +3,14 @@
 
 cd /overlay
 rm -rf `ls | egrep -v '(upper|.fs_state)'`
-cd upper
-rm -rf `ls | egrep -v '(etc)'`
-cd etc/config
+cd /overlay/upper
+rm -rf `ls | egrep -v '(etc|usr)'`
+cd /overlay/upper/usr
+rm -rf `ls | egrep -v '(share)'`
+cd /overlay/upper/usr/share
+rm -rf `ls | egrep -v '(unblockneteasemusic)'`
+cd /overlay/upper/etc/config
 rm -rf `ls | egrep '(luci|ucitrack)'`
-cd ..
+cd /overlay/upper/etc
 rm -rf `ls | egrep -v '(config|openclash|samba|subconverter|transmission|bench.log|passwd|shadow|sysupgrade.conf)'`
 sleep 5 && touch /etc/banner && reboot
