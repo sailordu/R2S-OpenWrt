@@ -27,6 +27,7 @@
 - Frps
 - Transmission
 - sqm-QoS
+- UnblockNeteasemusic
 
 ## 升级方法
 * 原生OP内置升级,可选保留配置
