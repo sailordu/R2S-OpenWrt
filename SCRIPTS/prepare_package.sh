@@ -3,6 +3,18 @@ clear
 ##准备工作
 #Kernel
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3277.patch | patch -p1
+#RT Kernel
+wget -P target/linux/generic/hack-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/999-patch-5.4.61-rt37.patch
+sed -i '/PREEMPT/d' ./target/linux/rockchip/armv8/config-5.4
+echo '
+CONFIG_PREEMPT_RT=y
+CONFIG_PREEMPTION=y
+' >> ./target/linux/rockchip/armv8/config-5.4
+sed -i '/PREEMPT/d' ./target/linux/rockchip/config-default
+echo '
+CONFIG_PREEMPT_RT=y
+CONFIG_PREEMPTION=y
+' >> ./target/linux/rockchip/config-default
 #HW-RNG
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
 patch -p1 < ./Support-hardware-random-number-generator-for-RK3328.patch
@@ -153,6 +165,14 @@ svn co https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-transmis
 #vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-vlmcsd package/lean/luci-app-vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/lean/vlmcsd
+#补全部分依赖（实际上并不会用到
+svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/utils/fuse package/utils/fuse
+svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/services/samba36 package/network/services/samba36
+svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/libs/libconfig package/libs/libconfig
+svn co https://github.com/openwrt/packages/trunk/libs/nghttp2 package/libs/nghttp2
+svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng package/libs/libcap-ng
+rm -rf ./feeds/packages/utils/collectd
+svn co https://github.com/openwrt/packages/trunk/utils/collectd feeds/packages/utils/collectd
 #FullCone模块
 svn co https://github.com/Lienol/openwrt/trunk/package/network/fullconenat package/network/fullconenat
 #翻译及部分功能优化
