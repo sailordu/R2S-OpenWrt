@@ -146,12 +146,6 @@ git clone -b master --single-branch https://github.com/vernesong/OpenClash packa
 #frp
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
-#transmission-web-control
-rm -rf ./feeds/packages/net/transmission*
-rm -rf ./feeds/luci/applications/luci-app-transmission/
-svn co https://github.com/coolsnowwolf/packages/trunk/net/transmission feeds/packages/net/transmission
-svn co https://github.com/coolsnowwolf/packages/trunk/net/transmission-web-control feeds/packages/net/transmission-web-control
-svn co https://github.com/coolsnowwolf/luci/trunk/applications/luci-app-transmission feeds/luci/applications/luci-app-transmission
 #vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-vlmcsd package/lean/luci-app-vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/lean/vlmcsd
