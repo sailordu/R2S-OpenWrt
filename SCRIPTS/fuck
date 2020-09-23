@@ -12,5 +12,5 @@ rm -rf `ls | egrep -v '(unblockneteasemusic)'`
 cd /overlay/upper/etc/config
 rm -rf `ls | egrep '(luci|ucitrack)'`
 cd /overlay/upper/etc
-rm -rf `ls | egrep -v '(config|openclash|samba|transmission|bench.log|passwd|shadow|sysupgrade.conf)'`
+rm -rf `ls | egrep -v '(config|openclash|bench.log|passwd|shadow|sysupgrade.conf)'`
 sleep 5 && touch /etc/banner && reboot
