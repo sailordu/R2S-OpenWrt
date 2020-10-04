@@ -1,8 +1,14 @@
 #!/bin/bash
 clear
 ##准备工作
+#blocktrron.git
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-PHY-ID.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/Revert-uboot-rockchip-update-NanoPi-R2S-patches.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-enable-Realtek-PHY-support.patch
+patch -p1 < ./rockchip-fix-NanoPi-R2S-PHY-ID.patch
+patch -p1 < ./Revert-uboot-rockchip-update-NanoPi-R2S-patches.patch
+patch -p1 < ./rockchip-enable-Realtek-PHY-support.patch
 #Kernel
-wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3277.patch | patch -p1
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3178.patch | patch -p1
 #HW-RNG
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
@@ -125,7 +131,7 @@ svn co https://github.com/openwrt/luci/branches/openwrt-18.06/applications/luci-
 #oled
 git clone -b master --single-branch https://github.com/NateLol/luci-app-oled package/new/luci-app-oled
 #网易云解锁
-git clone -b master --single-branch https://github.com/project-openwrt/luci-app-unblockneteasemusic package/new/UnblockNeteaseMusic
+git clone https://github.com/project-openwrt/luci-app-unblockneteasemusic package/new/UnblockNeteaseMusic
 #定时重启
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autoreboot package/lean/luci-app-autoreboot
 #argon主题
