@@ -4,7 +4,7 @@ clear
 #blocktrron.git
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10-rc5.patch
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
-patch -p1 < ./exp/uboot-rockchip-update-to-v2020.10-rc5.patch
+patch -p1 < ./uboot-rockchip-update-to-v2020.10-rc5.patch
 patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
 
 #update r8152 driver
