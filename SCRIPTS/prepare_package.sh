@@ -1,11 +1,19 @@
 #!/bin/bash
 clear
-##准备工作
-#Kernel
+
+#blocktrron.git
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10-rc5.patch
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
+patch -p1 < ./exp/uboot-rockchip-update-to-v2020.10-rc5.patch
+patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
+
+#update r8152 driver
 wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3178.patch | patch -p1
+
 #HW-RNG
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
 patch -p1 < ./Support-hardware-random-number-generator-for-RK3328.patch
+##准备工作
 #回滚FW3
 rm -rf ./package/network/config/firewall
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/config/firewall package/network/config/firewall
@@ -13,6 +21,8 @@ svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network
 rm -f ./feeds.conf.default
 wget https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/feeds.conf.default
 wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/include/scons.mk
+wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
+patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #remove annoying snapshot tag
 sed -i 's,SNAPSHOT,,g' include/version.mk
 sed -i 's,snapshots,,g' package/base-files/image-config.in
@@ -28,9 +38,6 @@ sed -i 's/-f/-f -i/g' feeds/packages/utils/rng-tools/files/rngd.init
 ##必要的patch
 #patch i2c0
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
-#patch rk-crypto
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/kernel_crypto-add-rk3328-crypto-support.patch
-patch -p1 < ./kernel_crypto-add-rk3328-crypto-support.patch
 #luci network
 wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/luci_network-add-packet-steering.patch
 patch -p1 < ./luci_network-add-packet-steering.patch
@@ -74,6 +81,14 @@ sed -i '/;;/i\set_interface_core 1 "ff150000" "ff150000.i2c"' target/linux/rockc
 sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
 ##获取额外package
+#luci-app-compressed-memory
+wget -O- https://github.com/openwrt/openwrt/compare/3f5cf3...NoTengoBattery:master.patch | patch -p1
+mkdir ./package/new
+cp -rf ../NoTengoBattery/feeds/luci/applications/luci-app-compressed-memory ./package/new/luci-app-compressed-memory
+sed -i 's,include ../..,include $(TOPDIR)/feeds/luci,g' ./package/new/luci-app-compressed-memory/Makefile
+#更换cryptodev-linux
+rm -rf ./package/kernel/cryptodev-linux
+svn co https://github.com/project-openwrt/openwrt/trunk/package/kernel/cryptodev-linux package/kernel/cryptodev-linux
 #更换curl
 rm -rf ./package/network/utils/curl
 svn co https://github.com/openwrt/packages/trunk/net/curl package/network/utils/curl
@@ -155,7 +170,7 @@ svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng package/libs/lib
 rm -rf ./feeds/packages/utils/collectd
 svn co https://github.com/openwrt/packages/trunk/utils/collectd feeds/packages/utils/collectd
 #FullCone模块
-svn co https://github.com/Lienol/openwrt/trunk/package/network/fullconenat package/network/fullconenat
+cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
 #翻译及部分功能优化
 git clone -b master --single-branch https://github.com/QiuSimons/addition-trans-zh package/lean/lean-translate
 #SFE
@@ -164,8 +179,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier p
 #UPNP（回滚以解决某些沙雕设备的沙雕问题
 rm -rf ./feeds/packages/net/miniupnpd
 svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
-#disable-rk3328-eth-offloading
-# wget -P target/linux/rockchip/armv8/base-files/etc/hotplug.d/iface https://raw.githubusercontent.com/friendlyarm/friendlywrt/master-v19.07.1/target/linux/rockchip-rk3328/base-files/etc/hotplug.d/iface/12-disable-rk3328-eth-offloading
 
 #kernel config
 echo '
