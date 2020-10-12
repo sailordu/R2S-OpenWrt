@@ -208,10 +208,6 @@ CONFIG_CRYPTO_SIMD=y
 # CONFIG_CRYPTO_SM4_ARM64_CE is not set
 ' >> ./target/linux/rockchip/armv8/config-5.4
 
-#let trojan prefer chacha20(vssr,passwall,ssrp
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/chacha.patch
-patch -p1 < ./chacha.patch
-
 ##最后的收尾工作
 #Lets Fuck
 mkdir package/base-files/files/usr/bin
