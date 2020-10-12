@@ -2,16 +2,13 @@
 clear
 
 #blocktrron.git
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10-rc5.patch
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10-rc5.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
 patch -p1 < ./uboot-rockchip-update-to-v2020.10-rc5.patch
 patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
 
-#update r8152 driver
-wget -O- https://patch-diff.githubusercontent.com/raw/openwrt/openwrt/pull/3178.patch | patch -p1
-
 #HW-RNG
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
 patch -p1 < ./Support-hardware-random-number-generator-for-RK3328.patch
 ##准备工作
 #回滚FW3
@@ -21,7 +18,7 @@ svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network
 rm -f ./feeds.conf.default
 wget https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/feeds.conf.default
 wget -P include/ https://raw.githubusercontent.com/openwrt/openwrt/openwrt-19.07/include/scons.mk
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
 patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #remove annoying snapshot tag
 sed -i 's,SNAPSHOT,,g' include/version.mk
@@ -37,17 +34,17 @@ sed -i 's/-f/-f -i/g' feeds/packages/utils/rng-tools/files/rngd.init
 
 ##必要的patch
 #patch i2c0
-wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
 #luci network
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/luci_network-add-packet-steering.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/luci_network-add-packet-steering.patch
 patch -p1 < ./luci_network-add-packet-steering.patch
 #patch jsonc
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/use_json_object_new_int64.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
 #patch dnsmasq
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/luci-add-filter-aaaa-option.patch
-wget -P package/network/services/dnsmasq/patches/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/900-add-filter-aaaa-option.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/luci-add-filter-aaaa-option.patch
+wget -P package/network/services/dnsmasq/patches/ https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/900-add-filter-aaaa-option.patch
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
 rm -rf ./package/base-files/files/etc/init.d/boot
@@ -64,14 +61,14 @@ pushd target/linux/generic/hack-5.4
 wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/952-net-conntrack-events-support-multiple-registrant.patch
 popd
 #Patch FireWall 以增添SFE
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
 patch -p1 < ./luci-app-firewall_add_sfe_switch.patch
 # SFE内核补丁
 pushd target/linux/generic/hack-5.4
 wget https://raw.githubusercontent.com/Lienol/openwrt/dev-master/target/linux/generic/hack-5.4/999-01-shortcut-fe-support.patch
 popd
 #OC-1608
-wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
+wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
 #OC-1512
 #wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/nicksun98/R2S-OpenWrt/master/PATCH/new/main/999-RK3328-enable-1512mhz-opp.patch
 #IRQ
@@ -107,6 +104,9 @@ rm -rf ./feeds/packages/lang/node-serialport
 svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-serialport feeds/packages/lang/node-serialport
 rm -rf ./feeds/packages/lang/node-serialport-bindings
 svn co https://github.com/nxhack/openwrt-node-packages/trunk/node-serialport-bindings feeds/packages/lang/node-serialport-bindings
+#更换libcap
+rm -rf ./feeds/packages/libs/libcap/
+svn co https://github.com/openwrt/packages/trunk/libs/libcap feeds/packages/libs/libcap
 #更换GCC版本
 rm -rf ./feeds/packages/devel/gcc
 svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/gcc
@@ -120,7 +120,7 @@ svn co https://github.com/project-openwrt/packages/trunk/lang/golang/golang feed
 svn co https://github.com/NateLol/natelol/trunk/luci-app-beardropper package/new/luci-app-beardropper
 #luci-app-freq
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/luci-app-cpufreq package/lean/luci-app-cpufreq
-wget -q https://raw.githubusercontent.com/project-openwrt/R2S-OpenWrt/master/PATCH/new/package/luci-app-freq.patch
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/package/luci-app-freq.patch
 patch -p1 < ./luci-app-freq.patch
 #arpbind
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
@@ -207,6 +207,10 @@ CONFIG_CRYPTO_SIMD=y
 # CONFIG_CRYPTO_SM3_ARM64_CE is not set
 # CONFIG_CRYPTO_SM4_ARM64_CE is not set
 ' >> ./target/linux/rockchip/armv8/config-5.4
+
+#let trojan prefer chacha20(vssr,passwall,ssrp
+wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/chacha.patch
+patch -p1 < ./chacha.patch
 
 ##最后的收尾工作
 #Lets Fuck
