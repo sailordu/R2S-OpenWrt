@@ -10,6 +10,7 @@ patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
 #HW-RNG
 wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
 patch -p1 < ./Support-hardware-random-number-generator-for-RK3328.patch
+
 ##准备工作
 #回滚FW3
 rm -rf ./package/network/config/firewall
@@ -24,7 +25,7 @@ patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 sed -i 's,SNAPSHOT,,g' include/version.mk
 sed -i 's,snapshots,,g' package/base-files/image-config.in
 sed -i 's/ %V,//g' package/base-files/files/etc/banner
-#使用O3级别的优化
+#使用O2级别的优化
 sed -i 's/Os/O2/g' include/target.mk
 sed -i 's/O2/O2/g' ./rules.mk
 #更新feed
@@ -65,7 +66,7 @@ wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new
 patch -p1 < ./luci-app-firewall_add_sfe_switch.patch
 # SFE内核补丁
 pushd target/linux/generic/hack-5.4
-wget https://raw.githubusercontent.com/Lienol/openwrt/dev-master/target/linux/generic/hack-5.4/999-01-shortcut-fe-support.patch
+wget https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/hack-5.4/999-shortcut-fe-support.patch
 popd
 #OC-1608
 wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
