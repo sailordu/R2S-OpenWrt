@@ -2,10 +2,10 @@
 clear
 
 #blocktrron.git
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10-rc5.patch
-wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
-patch -p1 < ./uboot-rockchip-update-to-v2020.10-rc5.patch
-patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
+# wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10.patch
+# wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NaunoPi-R2S-GMAC-clock-name.patch
+# patch -p1 < ./uboot-rockchip-update-to-v2020.10.patch
+# patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
 
 #HW-RNG
 wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
@@ -127,9 +127,7 @@ patch -p1 < ./luci-app-freq.patch
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-arpbind package/lean/luci-app-arpbind
 #AutoCore
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/autocore package/lean/autocore
-svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/coremark package/lean/coremark
-mkdir package/lean/coremark/patches
-wget -P package/lean/coremark/patches/ https://raw.githubusercontent.com/QiuSimons/Others/master/coremark.patch
+svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/coremark package/lean/coremark
 #DDNS
 rm -rf ./feeds/packages/net/ddns-scripts
 rm -rf ./feeds/luci/applications/luci-app-ddns
