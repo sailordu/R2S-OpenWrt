@@ -144,9 +144,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autorebo
 #argon主题
 git clone -b master --single-branch https://github.com/jerrykuku/luci-theme-argon package/new/luci-theme-argon
 git clone -b master --single-branch https://github.com/jerrykuku/luci-app-argon-config package/new/luci-app-argon-config
-#SmartDNS
-#svn co https://github.com/project-openwrt/packages/trunk/net/smartdns package/new/smartdns
-#git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns package/new/luci-app-smartdns/
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 #luci-app-cpulimit
@@ -154,6 +151,12 @@ svn co https://github.com/QiuSimons/Others/trunk/luci-app-cpulimit package/lean/
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/ntlf9t/cpulimit package/lean/cpulimit
 #OpenClash
 git clone -b master --single-branch https://github.com/vernesong/OpenClash package/new/luci-app-openclash
+#SeverChan
+git clone -b master --single-branch https://github.com/tty228/luci-app-serverchan package/new/luci-app-serverchan
+svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/utils/iputils package/network/utils/iputils
+#SmartDNS
+#svn co https://github.com/project-openwrt/packages/trunk/net/smartdns package/new/smartdns
+#git clone -b lede --single-branch https://github.com/pymumu/luci-app-smartdns package/new/luci-app-smartdns/
 #frp
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/lean/frp
