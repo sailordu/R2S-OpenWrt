@@ -1,12 +1,6 @@
 #!/bin/bash
 clear
 
-#blocktrron.git
-# wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/uboot-rockchip-update-to-v2020.10.patch
-# wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/exp/rockchip-fix-NaunoPi-R2S-GMAC-clock-name.patch
-# patch -p1 < ./uboot-rockchip-update-to-v2020.10.patch
-# patch -p1 < ./rockchip-fix-NanoPi-R2S-GMAC-clock-name.patch
-
 #HW-RNG
 wget -q https://raw.githubusercontent.com/QiuSimons/R2S-OpenWrt/master/PATCH/new/main/Support-hardware-random-number-generator-for-RK3328.patch
 patch -p1 < ./Support-hardware-random-number-generator-for-RK3328.patch
@@ -91,7 +85,8 @@ rm -rf ./package/kernel/cryptodev-linux
 svn co https://github.com/project-openwrt/openwrt/trunk/package/kernel/cryptodev-linux package/kernel/cryptodev-linux
 #更换curl
 rm -rf ./package/network/utils/curl
-svn co https://github.com/openwrt/packages/trunk/net/curl package/network/utils/curl
+svn co https://github.com/openwrt/packages/trunk/net/curl feeds/packages/net/curl
+ln -sf ../../../../feeds/packages/net/curl ./package/feeds/packages/curl
 #更换Node版本
 rm -rf ./feeds/packages/lang/node
 svn co https://github.com/nxhack/openwrt-node-packages/trunk/node feeds/packages/lang/node
@@ -116,9 +111,6 @@ svn co https://github.com/openwrt/packages/trunk/devel/gcc feeds/packages/devel/
 #更换Golang版本
 rm -rf ./feeds/packages/lang/golang
 svn co https://github.com/openwrt/packages/trunk/lang/golang feeds/packages/lang/golang
-rm -rf ./feeds/packages/lang/golang/.svn
-rm -rf ./feeds/packages/lang/golang/golang
-svn co https://github.com/project-openwrt/packages/trunk/lang/golang/golang feeds/packages/lang/golang/golang
 #beardropper
 svn co https://github.com/NateLol/natelol/trunk/luci-app-beardropper package/new/luci-app-beardropper
 #luci-app-freq
@@ -169,8 +161,10 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/le
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/utils/fuse package/utils/fuse
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/services/samba36 package/network/services/samba36
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/libs/libconfig package/libs/libconfig
-svn co https://github.com/openwrt/packages/trunk/libs/nghttp2 package/libs/nghttp2
-svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng package/libs/libcap-ng
+svn co https://github.com/openwrt/packages/trunk/libs/nghttp2 feeds/packages/libs/nghttp2
+ln -sf ../../../../feeds/packages/libs/nghttp2 ./package/feeds/packages/nghttp2
+svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng feeds/packages/libs/libcap-ng
+ln -sf ../../../../feeds/packages/libs/libcap-ng ./package/feeds/packages/libcap-ng
 rm -rf ./feeds/packages/utils/collectd
 svn co https://github.com/openwrt/packages/trunk/utils/collectd feeds/packages/utils/collectd
 #FullCone模块
