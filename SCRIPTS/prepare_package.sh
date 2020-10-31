@@ -86,7 +86,7 @@ svn co https://github.com/project-openwrt/openwrt/trunk/package/kernel/cryptodev
 #更换curl
 rm -rf ./package/network/utils/curl
 svn co https://github.com/openwrt/packages/trunk/net/curl feeds/packages/net/curl
-ln -sf ../../../../feeds/packages/net/curl ./package/feeds/packages/curl
+ln -sf ./feeds/packages/net/curl ./package/feeds/packages/curl
 #更换Node版本
 rm -rf ./feeds/packages/lang/node
 svn co https://github.com/nxhack/openwrt-node-packages/trunk/node feeds/packages/lang/node
@@ -162,9 +162,9 @@ svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/utils/f
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/services/samba36 package/network/services/samba36
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/libs/libconfig package/libs/libconfig
 svn co https://github.com/openwrt/packages/trunk/libs/nghttp2 feeds/packages/libs/nghttp2
-ln -sf ../../../../feeds/packages/libs/nghttp2 ./package/feeds/packages/nghttp2
+ln -sf ./feeds/packages/libs/nghttp2 ./package/feeds/packages/nghttp2
 svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng feeds/packages/libs/libcap-ng
-ln -sf ../../../../feeds/packages/libs/libcap-ng ./package/feeds/packages/libcap-ng
+ln -sf ./feeds/packages/libs/libcap-ng ./package/feeds/packages/libcap-ng
 rm -rf ./feeds/packages/utils/collectd
 svn co https://github.com/openwrt/packages/trunk/utils/collectd feeds/packages/utils/collectd
 #FullCone模块
