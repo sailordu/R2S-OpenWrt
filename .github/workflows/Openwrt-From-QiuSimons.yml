@@ -1,11 +1,11 @@
 name: Openwrt From QiuSimons
 
 on:
-  # push:
-  #   branches:
-  #     - master
-  #   paths:
-  #     - '.github/workflows/r2s_OPoA_QiuSimons.yml'
+   push:
+     branches:
+       - master
+     paths:
+       - '.github/workflows/r2s_OPoA_QiuSimons.yml'
   schedule:
     - cron: '00 04 * * 1'
   watch:
@@ -84,6 +84,9 @@ jobs:
       - name: Make Config
         run: |
           cd openwrt
+          cp -a ../fan/. ./target/linux/rockchip/armv8/base-files/
+          mkdir ./target/linux/rockchip/armv8/base-files/etc/rc.d/
+          ln -s ../init.d/fa-rk3328-pwmfan ./target/linux/rockchip/armv8/base-files/etc/rc.d/S96fa-rk3328-pwmfan
           mv ../SEED/config.seed .config
           make defconfig
           chmod -R 755 ./
