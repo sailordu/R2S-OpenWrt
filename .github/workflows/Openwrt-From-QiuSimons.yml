@@ -31,11 +31,11 @@ jobs:
           sudo apt clean
           docker rmi $(docker image ls -aq)
           df -h
-      - name: Delete old artifacts
-        uses: kolpav/purge-artifacts-action@v1
-        with:
-          token: ${{ secrets.sec_token }}
-          expire-in: 1days # Setting this to 0 will delete all artifacts
+      # - name: Delete old artifacts
+      #   uses: kolpav/purge-artifacts-action@v1
+      #   with:
+      #     token: ${{ secrets.sec_token }}
+      #     expire-in: 1days # Setting this to 0 will delete all artifacts
 
       - name: Init build dependencies
         env:
