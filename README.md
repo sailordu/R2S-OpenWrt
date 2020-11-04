@@ -2,9 +2,11 @@
  使用 Github Actions 在线编译 NanoPi-R2S 固件
 
  Fork自msylgj/R2S-OpenWrt
+ 
  修改如下两处以自用：
- 1.添加kmod-rtl8812au-ct
- 2.添加pwm fan控制风扇转动
+ 
+ * 添加kmod-rtl8812au-ct
+ * 添加pwm fan控制风扇转动
 
 ## 说明
 * Fork自QiuSimons大神的纯原生OP版本,个人根据**完全私人**口味进行了一定修改,建议去源库了解更多
