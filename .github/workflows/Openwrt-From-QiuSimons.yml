@@ -1,11 +1,10 @@
 name: Openwrt From QiuSimons
 
 on:
-   push:
-     branches:
-       - master
-     paths:
-       - '.github/workflows/Openwrt-From-QiuSimons.yml'
+  push:
+    branches: [ master ]
+    paths:
+      - '.github/workflows/Openwrt-From-QiuSimons.yml'
   schedule:
     - cron: '00 04 * * 1'
   watch:
