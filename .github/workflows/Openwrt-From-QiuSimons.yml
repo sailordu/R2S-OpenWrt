@@ -5,7 +5,7 @@ on:
      branches:
        - master
      paths:
-       - '.github/workflows/r2s_OPoA_QiuSimons.yml'
+       - '.github/workflows/Openwrt-From-QiuSimons.yml'
   schedule:
     - cron: '00 04 * * 1'
   watch:
