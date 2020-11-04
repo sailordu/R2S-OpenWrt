@@ -1,5 +1,6 @@
 # NanoPi-R2S-OpenWrt
  使用 Github Actions 在线编译 NanoPi-R2S 固件
+
  Fork自msylgj/R2S-OpenWrt
  修改如下两处以自用：
  1.添加kmod-rtl8812au-ct
