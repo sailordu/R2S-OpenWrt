@@ -83,6 +83,7 @@ jobs:
       - name: Make Config
         run: |
           cd openwrt
+          
           cp -a ../fan/. ./target/linux/rockchip/armv8/base-files/
           mkdir ./target/linux/rockchip/armv8/base-files/etc/rc.d/
           ln -s ../init.d/fa-rk3328-pwmfan ./target/linux/rockchip/armv8/base-files/etc/rc.d/S96fa-rk3328-pwmfan
