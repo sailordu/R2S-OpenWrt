@@ -6,7 +6,7 @@ on:
     paths:
       - '.github/workflows/Openwrt-From-QiuSimons.yml'
   schedule:
-    - cron: '00 04 * * 1'
+    - cron: '00 05 * * 1'
   watch:
     types: [started]
 
