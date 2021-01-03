@@ -7,35 +7,42 @@
 
  * 添加pwm fan根据cpu温度控制风扇转动
  * merge from upstream 2020-11-21
+ * merge from upstream 2021-01-03
  
 
 ## 说明
 * Fork自QiuSimons大神的纯原生OP版本,个人根据**完全私人**口味进行了一定修改,建议去源库了解更多
-    - [QiuSimons/R2S-OpenWrt](https://github.com/project-openwrt/R2S-OpenWrt)
+    - [QiuSimons/R2S-OpenWrt](https://github.com/QiuSimons/R2S-OpenWrt)
 * ipv4: 192.168.2.1
 * username: root
 * password: password
 * **7月29日起,r2s支持正式合入官方源** 原汁原味非杂交! 感谢r2s Club天灵/GC/QC等诸多大佬的努力!
 * 添加Flow Offload/SFE(只能二选一,默认开启SFE)+Full Cone Nat+BBR
-* **1.608Ghz超频** 感谢QiuSimons大佬的辛苦付出和测试
 * 支持scp和sftp
 * 无usb-wifi支持.wan&lan交换
 * 原生OP内置升级可用,固件重置可用
 * 支持SSD1306驱动的12864(0.96英寸)和12832(0.91英寸)OLED屏幕
 
 ## 插件清单
-- cpufreq
-- oled-app
-- BearDropper
-- OpenClash
-- ddns
-- WOL
-- vlmcsd
-- Samba4
-- Frps
-- Transmission
-- sqm-QoS
-- UnblockNeteasemusic
+- app:adguardhome
+- app:argon-config
+- app:arpbind
+- app:autoreboot
+- app:beardropper
+- app:chinadns-ng
+- app:compressed-memory
+- app:cpufreq
+- app:frpc
+- app:openclash
+- app:ramfree
+- app:serverchan
+- app:smartdns
+- app:unblockneteasemusic
+- app:upnp
+- app:vlmcsd
+- app:wol
+- theme:argon
+- theme:bootstrap
 
 ## 升级方法
 * 原生OP内置升级,可选保留配置
