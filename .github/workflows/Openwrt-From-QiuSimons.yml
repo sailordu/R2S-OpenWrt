@@ -94,7 +94,7 @@ jobs:
 
       - name: Prepare Sources
         run: |
-          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/SCRIPTS/R2S/01_get_ready.sh
+          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/tree/master/SCRIPTS/R2S/01_get_ready.sh
           /bin/bash 01_get_ready.sh
       - name: Prepare Package
         run: |
@@ -104,17 +104,17 @@ jobs:
       - name: Convert Translation
         run: |
           cd openwrt
-          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/SCRIPTS/03_convert_translation.sh
+          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/tree/master/SCRIPTS/03_convert_translation.sh
           /bin/bash 03_convert_translation.sh
       - name: Remove Upx
         run: |
           cd openwrt
-          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/SCRIPTS/04_remove_upx.sh
+          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/tree/master/SCRIPTS/04_remove_upx.sh
           /bin/bash 04_remove_upx.sh
       - name: Add ACL
         run: |
           cd openwrt
-          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/SCRIPTS/05_create_acl_for_luci.sh
+          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/tree/master/SCRIPTS/05_create_acl_for_luci.sh
           /bin/bash 05_create_acl_for_luci.sh -a
       - name: Make Config
         run: |
@@ -138,7 +138,7 @@ jobs:
       - name: Cleaning
         run: |
           cd openwrt/bin/targets/rockchip/armv8
-          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/SCRIPTS/06_cleaning.sh
+          wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/tree/master/SCRIPTS/06_cleaning.sh
           /bin/bash ./06_cleaning.sh
       - name: Assemble Artifact
         id: assemble_artifact
