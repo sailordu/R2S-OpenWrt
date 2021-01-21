@@ -5,17 +5,18 @@ clear
 #使用19.07的feed源
 rm -f ./feeds.conf.default
 wget https://github.com/openwrt/openwrt/raw/openwrt-19.07/feeds.conf.default
+wget -P include/ https://github.com/openwrt/openwrt/raw/openwrt-19.07/include/scons.mk
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
+patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #使用luci master
 sed -i 's,https://git.openwrt.org/project/luci.git;openwrt-19.07,https://git.openwrt.org/project/luci.git,g' ./feeds.conf.default
-wget -P include/ https://github.com/openwrt/openwrt/raw/openwrt-19.07/include/scons.mk
-wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/main/0001-tools-add-upx-ucl-support.patch
-patch -p1 < ./0001-tools-add-upx-ucl-support.patch
 #remove annoying snapshot tag
 sed -i 's,SNAPSHOT,,g' include/version.mk
 sed -i 's,snapshots,,g' package/base-files/image-config.in
 sed -i 's/ %V,//g' package/base-files/files/etc/banner
 #使用O2级别的优化
 sed -i 's/Os/O2/g' include/target.mk
+sed -i 's,-mcpu=generic,-march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53,g' include/target.mk
 sed -i 's/O2/O2/g' ./rules.mk
 #更新feed
 ./scripts/feeds update -a && ./scripts/feeds install -a
@@ -31,23 +32,27 @@ sed -i '/;;/i\ethtool -K eth0 rx off tx off && logger -t disable-offloading "dis
 #r8152新驱动（可选
 svn co https://github.com/project-openwrt/openwrt/branches/master/package/ctcgfw/r8152 package/new/r8152
 sed -i '/rtl8152/d' ./target/linux/rockchip/image/armv8.mk
+#patch i2c0（服务于OLED，可选
+wget -P target/linux/rockchip/patches-5.4/ https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/main/998-rockchip-enable-i2c0-on-NanoPi-R2S.patch
+#OC（提升主频，可选
+wget -P target/linux/rockchip/patches-5.4/ https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/main/999-unlock-1608mhz-rk3328.patch
 #OC-1512
-wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/nicksun98/R2S-OpenWrt/master/PATCH/new/main/999-RK3328-enable-1512mhz-opp.patch
+# wget -P target/linux/rockchip/patches-5.4/ https://raw.githubusercontent.com/nicksun98/R2S-OpenWrt/master/PATCH/new/main/999-RK3328-enable-1512mhz-opp.patch
 #SWAP LAN WAN（满足千兆场景，可选
-#sed -i 's,"eth1" "eth0","eth0" "eth1",g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
-#sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i 's,"eth1" "eth0","eth0" "eth1",g' target/linux/rockchip/armv8/base-files/etc/board.d/02_network
+sed -i "s,'eth1' 'eth0','eth0' 'eth1',g" target/linux/rockchip/armv8/base-files/etc/board.d/02_network
 
 ##必要的patch
 #luci network(luci master自带)
-# wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/main/luci_network-add-packet-steering.patch
+# wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/main/luci_network-add-packet-steering.patch
 # patch -p1 < ./luci_network-add-packet-steering.patch
 #patch jsonc
-wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/package/use_json_object_new_int64.patch
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/use_json_object_new_int64.patch
 patch -p1 < ./use_json_object_new_int64.patch
 #patch dnsmasq
-wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
-wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/package/luci-add-filter-aaaa-option.patch
-wget -P package/network/services/dnsmasq/patches/ https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/package/900-add-filter-aaaa-option.patch
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/dnsmasq-add-filter-aaaa-option.patch
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/luci-add-filter-aaaa-option.patch
+wget -P package/network/services/dnsmasq/patches/ https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/900-add-filter-aaaa-option.patch
 patch -p1 < ./dnsmasq-add-filter-aaaa-option.patch
 patch -p1 < ./luci-add-filter-aaaa-option.patch
 rm -rf ./package/base-files/files/etc/init.d/boot
@@ -64,9 +69,8 @@ popd
 mkdir package/network/config/firewall/patches
 wget -P package/network/config/firewall/patches/ https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/fullconenat.patch
 # Patch LuCI 以增添fullcone开关
-pushd feeds/luci
-wget -O- https://github.com/LGA1150/fullconenat-fw3-patch/raw/master/luci.patch | git apply
-popd
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/luci-app-firewall_add_fullcone.patch
+patch -p1 < ./luci-app-firewall_add_fullcone.patch
 #FullCone 相关组件
 cp -rf ../openwrt-lienol/package/network/fullconenat ./package/network/fullconenat
 #（从这行开始接下来3个操作全是和SFE相关的，不需要可以一并注释掉，但极不建议
@@ -75,12 +79,12 @@ pushd target/linux/generic/hack-5.4
 wget https://github.com/coolsnowwolf/lede/raw/master/target/linux/generic/hack-5.4/953-net-patch-linux-kernel-to-support-shortcut-fe.patch
 popd
 # Patch LuCI 以增添SFE开关
-wget -q https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
+wget -q https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/new/package/luci-app-firewall_add_sfe_switch.patch
 patch -p1 < ./luci-app-firewall_add_sfe_switch.patch
 # SFE 相关组件
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/shortcut-fe package/lean/shortcut-fe
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/fast-classifier package/lean/fast-classifier
-wget -P package/base-files/files/etc/init.d/ https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/duplicate/shortcut-fe
+wget -P package/base-files/files/etc/init.d/ https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/raw/master/PATCH/duplicate/shortcut-fe
 #wget -qO - https://github.com/AmadeusGhost/lede/commit/5e95fd8572d5727ccbfe199efbd5d98297d8643b.patch | patch -p1
 
 ##获取额外package
@@ -144,6 +148,8 @@ svn co https://github.com/project-openwrt/openwrt/branches/master/package/lean/a
 svn co https://github.com/project-openwrt/packages/trunk/utils/coremark feeds/packages/utils/coremark
 ln -sf ../../../feeds/packages/utils/coremark ./package/feeds/packages/coremark
 sed -i 's,default n,default y,g' feeds/packages/utils/coremark/Makefile
+#oled
+git clone -b master --depth 1 https://github.com/NateLol/luci-app-oled.git package/new/luci-app-oled
 #网易云解锁
 git clone --depth 1 https://github.com/project-openwrt/luci-app-unblockneteasemusic.git package/new/UnblockNeteaseMusic
 #定时重启
@@ -151,12 +157,6 @@ svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-autorebo
 #argon主题
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-theme-argon.git package/new/luci-theme-argon
 git clone -b master --depth 1 https://github.com/jerrykuku/luci-app-argon-config.git package/new/luci-app-argon-config
-#AdGuard
-cp -rf ../openwrt-lienol/package/diy/luci-app-adguardhome ./package/new/luci-app-adguardhome
-cp -rf ../openwrt-lienol/package/diy/adguardhome ./package/new/adguardhome
-#ChinaDNS
-git clone -b luci --depth 1 https://github.com/pexcn/openwrt-chinadns-ng.git package/new/luci-app-chinadns-ng
-git clone -b master --depth 1 https://github.com/pexcn/openwrt-chinadns-ng.git package/new/chinadns-ng
 #清理内存
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-ramfree package/lean/luci-app-ramfree
 #OpenClash
@@ -164,10 +164,7 @@ svn co https://github.com/vernesong/OpenClash/trunk/luci-app-openclash package/n
 #SeverChan
 git clone -b master --depth 1 https://github.com/tty228/luci-app-serverchan.git package/new/luci-app-serverchan
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/network/utils/iputils package/network/utils/iputils
-#SmartDNS
-cp -rf ../packages-lienol/net/smartdns ./package/new/smartdns
-cp -rf ../luci-lienol/applications/luci-app-smartdns ./package/new/luci-app-smartdns
-sed -i 's,include ../..,include $(TOPDIR)/feeds/luci,g' ./package/new/luci-app-smartdns/Makefile
+sed -i 's/--interface ${ipv._interface} //g' package/new/luci-app-serverchan/root/usr/bin/serverchan/serverchan
 #补全部分依赖（实际上并不会用到
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/libs/libnetfilter-log package/libs/libnetfilter-log
 svn co https://github.com/openwrt/openwrt/branches/openwrt-19.07/package/libs/libnetfilter-queue package/libs/libnetfilter-queue
@@ -183,6 +180,10 @@ svn co https://github.com/openwrt/packages/trunk/libs/libcap-ng feeds/packages/l
 ln -sf ../../../feeds/packages/libs/libcap-ng ./package/feeds/packages/libcap-ng
 rm -rf ./feeds/packages/utils/collectd
 svn co https://github.com/openwrt/packages/trunk/utils/collectd feeds/packages/utils/collectd
+svn co https://github.com/openwrt/packages/trunk/utils/usbutils feeds/packages/utils/usbutils
+ln -sf ../../../feeds/packages/utils/usbutils ./package/feeds/packages/usbutils
+svn co https://github.com/openwrt/packages/trunk/utils/hwdata feeds/packages/utils/hwdata
+ln -sf ../../../feeds/packages/utils/hwdata ./package/feeds/packages/hwdata
 #UPNP（回滚以解决某些沙雕设备的沙雕问题
 rm -rf ./feeds/packages/net/miniupnpd
 svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packages/net/miniupnpd
@@ -190,13 +191,17 @@ svn co https://github.com/coolsnowwolf/packages/trunk/net/miniupnpd feeds/packag
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-vlmcsd package/lean/luci-app-vlmcsd
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/vlmcsd package/lean/vlmcsd
 #frp
+rm -rf ./feeds/luci/applications/luci-app-frps
 rm -rf ./feeds/luci/applications/luci-app-frpc
 rm -rf ./feeds/packages/net/frp
 rm -f ./package/feeds/packages/frp
+svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/luci-app-frps package/lean/luci-app-frps
 git clone --depth 1 https://github.com/kuoruan/luci-app-frpc.git package/lean/luci-app-frpc
 svn co https://github.com/coolsnowwolf/lede/trunk/package/lean/frp package/feeds/packages/frp
+#腾讯DDNS
+git clone --depth 1 https://github.com/msylgj/luci-app-tencentddns.git package/new/luci-app-tencentddns
 #翻译及部分功能优化
-svn co https://github.com/QiuSimons/R2S-OpenWrt/trunk/PATCH/duplicate/addition-trans-zh-master package/lean/lean-translate
+svn co https://github.com/QiuSimons/R2S-R4S-X86-OpenWrt/trunk/PATCH/duplicate/addition-trans-zh-r2s package/lean/lean-translate
 
 ##R2S相关
 #crypto
@@ -230,7 +235,6 @@ CONFIG_CRYPTO_SIMD=y
 #Lets Fuck
 mkdir package/base-files/files/usr/bin
 cp -f ../SCRIPTS/fuck package/base-files/files/usr/bin/fuck
-wget -P package/base-files/files/usr/bin/ https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/new/script/chinadnslist
 #最大连接
 sed -i 's/16384/65536/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
 #custom config
@@ -238,13 +242,11 @@ sed -i '/DISTRIB_DESCRIPTION/d' package/base-files/files/etc/openwrt_release
 sed -i "$ a\DISTRIB_DESCRIPTION='Built by OPoA($(date +%Y.%m.%d))@%D %V %C'" package/base-files/files/etc/openwrt_release
 sed -i '/%D/a\ OPoA Build' package/base-files/files/etc/banner
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
-sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' package/base-files/files/etc/shadow
+sed -i '/chinadnslist/d' package/lean/lean-translate/files/zzz-default-settings
+sed -i '/MosChinaDNS/d' package/lean/lean-translate/files/zzz-default-settings
 sed -i '/openwrt_luci/d' package/lean/lean-translate/files/zzz-default-settings
 #删除已有配置
 rm -rf .config
-#预配置一些插件
-wget -P files/etc/config/ https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/files/etc/config/chinadns-ng
-wget -P files/etc/config/ https://github.com/QiuSimons/R2S-OpenWrt/raw/master/PATCH/files/etc/config/smartdns
 #授予权限
 chmod -R 755 ./
 
