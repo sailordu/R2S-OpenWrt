@@ -5,7 +5,8 @@
  
  修改如下以自用：2020-11-05 001
 
- * 添加pwm fan根据cpu温度控制风扇转动
+ * R2S添加pwm fan根据cpu温度控制风扇转动
+ * WAN/LAN交换（靠近电源为WAN）
  * merge from upstream 2020-11-21
  * merge from upstream 2021-01-03
  * merge from upstream 2021-01-21
